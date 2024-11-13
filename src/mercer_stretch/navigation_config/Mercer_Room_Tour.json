@@ -1,0 +1,61 @@
+{
+    "origin" : {
+        "x" : -2.76,
+        "y" : -0.9,
+        "z" : 0.0,
+        "w" : 1.0,
+        "id" : "origin",
+        "delay" : true
+    },
+    "Poses": {
+        "Storefront" : {
+            "x" : -2.8,
+            "y" : 1.1,
+            "z" : -0.3,
+            "w" : 1.0,
+            "id" : "storefront",
+            "delay" : true
+        },
+        "Worktable" : {
+            "x" : -5.6,
+            "y" : -0.25,
+            "z" : 0.0,
+            "w" : 1.0,
+            "id" : "worktable",
+            "delay" : true
+        },
+        "PCBPrinter" : {
+            "x" : -6.15,
+            "y" : 4.64,
+            "z" : -0.75,
+            "w" : 1.0,
+            "id" : "pcbprinter",
+            "delay" : true
+        },
+        "Workstations" : {
+            "x" : -11.6,
+            "y" : 2.35,
+            "z" : 0.0,
+            "w" : 1.0,
+            "id" : "workstations",
+            "delay" : false
+        },
+        "Logo" : {
+            "x" : -17.0,
+            "y" : 1.0,
+            "z" : 0.0,
+            "w" : 1.0,
+            "id" : "logoandhammer",
+            "delay" : true
+        },
+        "End" : {
+            "x" : -17.0,
+            "y" : 1.0,
+            "z" : 0.0,
+            "w" : 1.0,
+            "id" : "end",
+            "delay" : true
+        }
+        
+    }
+}
