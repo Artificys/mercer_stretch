@@ -1,0 +1,88 @@
+\doxysection{mercer\+\_\+stretch.\+mercer\+\_\+nav.\+Mercer\+Nav Class Reference}
+\hypertarget{classmercer__stretch_1_1mercer__nav_1_1_mercer_nav}{}\label{classmercer__stretch_1_1mercer__nav_1_1_mercer_nav}\index{mercer\_stretch.mercer\_nav.MercerNav@{mercer\_stretch.mercer\_nav.MercerNav}}
+Inheritance diagram for mercer\+\_\+stretch.\+mercer\+\_\+nav.\+Mercer\+Nav\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classmercer__stretch_1_1mercer__nav_1_1_mercer_nav}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classmercer__stretch_1_1mercer__nav_1_1_mercer_nav_a1cb4f32433983e41ea8de47ff9cab6a1}\label{classmercer__stretch_1_1mercer__nav_1_1_mercer_nav_a1cb4f32433983e41ea8de47ff9cab6a1} 
+{\bfseries \+\_\+\+\_\+init\+\_\+\+\_\+} (self)
+\item 
+\Hypertarget{classmercer__stretch_1_1mercer__nav_1_1_mercer_nav_afbe30554b9e0350c857700e55ac6a3df}\label{classmercer__stretch_1_1mercer__nav_1_1_mercer_nav_afbe30554b9e0350c857700e55ac6a3df} 
+{\bfseries send\+\_\+initial\+\_\+pose} (self, pose)
+\item 
+\Hypertarget{classmercer__stretch_1_1mercer__nav_1_1_mercer_nav_aacf31908c40b8cc64765650bf47c29e7}\label{classmercer__stretch_1_1mercer__nav_1_1_mercer_nav_aacf31908c40b8cc64765650bf47c29e7} 
+{\bfseries parse\+\_\+pose\+\_\+dict\+\_\+to\+\_\+poses} (self)
+\item 
+\Hypertarget{classmercer__stretch_1_1mercer__nav_1_1_mercer_nav_ab425a0a6a157a48627504af90fcb66ed}\label{classmercer__stretch_1_1mercer__nav_1_1_mercer_nav_ab425a0a6a157a48627504af90fcb66ed} 
+{\bfseries go\+\_\+to\+\_\+waypoint} (self, pose, goal\+\_\+id="{}"{})
+\item 
+\Hypertarget{classmercer__stretch_1_1mercer__nav_1_1_mercer_nav_afea1040fbd050665beceaff129370a45}\label{classmercer__stretch_1_1mercer__nav_1_1_mercer_nav_afea1040fbd050665beceaff129370a45} 
+{\bfseries audio\+\_\+response\+\_\+callback} (self, future)
+\item 
+\Hypertarget{classmercer__stretch_1_1mercer__nav_1_1_mercer_nav_a794c2c94e1b201a65d94f497069d2684}\label{classmercer__stretch_1_1mercer__nav_1_1_mercer_nav_a794c2c94e1b201a65d94f497069d2684} 
+{\bfseries get\+\_\+result\+\_\+callback} (self, future)
+\item 
+\Hypertarget{classmercer__stretch_1_1mercer__nav_1_1_mercer_nav_a52c2f5a029c92cb40ed86caca4555978}\label{classmercer__stretch_1_1mercer__nav_1_1_mercer_nav_a52c2f5a029c92cb40ed86caca4555978} 
+{\bfseries main} (self)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classmercer__stretch_1_1mercer__nav_1_1_mercer_nav_afed39bad733702f305d392a7fcfa6fda}\label{classmercer__stretch_1_1mercer__nav_1_1_mercer_nav_afed39bad733702f305d392a7fcfa6fda} 
+{\bfseries route\+\_\+file} = self.\+get\+\_\+parameter(\textquotesingle{}route\+\_\+file\textquotesingle{}).value
+\item 
+\Hypertarget{classmercer__stretch_1_1mercer__nav_1_1_mercer_nav_a325a80e1bbda6821e1a8008c08d77669}\label{classmercer__stretch_1_1mercer__nav_1_1_mercer_nav_a325a80e1bbda6821e1a8008c08d77669} 
+{\bfseries navigator} = Basic\+Navigator()
+\item 
+\Hypertarget{classmercer__stretch_1_1mercer__nav_1_1_mercer_nav_a60f776711aad49f8fa07ee617f3f110d}\label{classmercer__stretch_1_1mercer__nav_1_1_mercer_nav_a60f776711aad49f8fa07ee617f3f110d} 
+str {\bfseries file\+\_\+path} = \textquotesingle{}/home/hello-\/robot/stretch\+\_\+user/navigation\+\_\+config/\textquotesingle{}
+\item 
+\Hypertarget{classmercer__stretch_1_1mercer__nav_1_1_mercer_nav_a81f7f7fe1c648fb4fa1b1118b96de8d3}\label{classmercer__stretch_1_1mercer__nav_1_1_mercer_nav_a81f7f7fe1c648fb4fa1b1118b96de8d3} 
+dict {\bfseries pose\+\_\+dict} = json.\+load(saved\+\_\+file)
+\item 
+\Hypertarget{classmercer__stretch_1_1mercer__nav_1_1_mercer_nav_aecf4f961f92d23c8674de8b9da8b0120}\label{classmercer__stretch_1_1mercer__nav_1_1_mercer_nav_aecf4f961f92d23c8674de8b9da8b0120} 
+{\bfseries audio\+\_\+cue\+\_\+client} = Action\+Client(self, Mercer\+Audio, \textquotesingle{}mercer\+\_\+audio\+\_\+server\textquotesingle{})
+\item 
+\Hypertarget{classmercer__stretch_1_1mercer__nav_1_1_mercer_nav_a46865f952391a3cfe6042785394c9550}\label{classmercer__stretch_1_1mercer__nav_1_1_mercer_nav_a46865f952391a3cfe6042785394c9550} 
+str {\bfseries audio\+\_\+file\+\_\+path} = \textquotesingle{}/home/hello-\/robot/Documents/MercerX Lab Greeter Audio/\textquotesingle{}
+\item 
+\Hypertarget{classmercer__stretch_1_1mercer__nav_1_1_mercer_nav_ae11fa773db01c3778c5d50adaf2edf4a}\label{classmercer__stretch_1_1mercer__nav_1_1_mercer_nav_ae11fa773db01c3778c5d50adaf2edf4a} 
+bool {\bfseries ready\+\_\+to\+\_\+move} = False
+\item 
+\Hypertarget{classmercer__stretch_1_1mercer__nav_1_1_mercer_nav_aa4517914a4024b20315fdb3108ebbb6e}\label{classmercer__stretch_1_1mercer__nav_1_1_mercer_nav_aa4517914a4024b20315fdb3108ebbb6e} 
+list {\bfseries route\+\_\+poses} = \mbox{[}$\,$\mbox{]}
+\item 
+\Hypertarget{classmercer__stretch_1_1mercer__nav_1_1_mercer_nav_a1550c6289a2baa3d520571281fe7681a}\label{classmercer__stretch_1_1mercer__nav_1_1_mercer_nav_a1550c6289a2baa3d520571281fe7681a} 
+{\bfseries result} = self.\+navigator.\+get\+Result()
+\item 
+\Hypertarget{classmercer__stretch_1_1mercer__nav_1_1_mercer_nav_a98a2d77df616d5acd6e6f542188a6264}\label{classmercer__stretch_1_1mercer__nav_1_1_mercer_nav_a98a2d77df616d5acd6e6f542188a6264} 
+{\bfseries get\+\_\+result\+\_\+callback}
+\item 
+\Hypertarget{classmercer__stretch_1_1mercer__nav_1_1_mercer_nav_a4e9c0759424b1b045df5734ff1e821f0}\label{classmercer__stretch_1_1mercer__nav_1_1_mercer_nav_a4e9c0759424b1b045df5734ff1e821f0} 
+{\bfseries audio\+\_\+result} = future.\+result().result
+\item 
+\Hypertarget{classmercer__stretch_1_1mercer__nav_1_1_mercer_nav_a7e41aa4ee3df21e6fde8d2392099e590}\label{classmercer__stretch_1_1mercer__nav_1_1_mercer_nav_a7e41aa4ee3df21e6fde8d2392099e590} 
+{\bfseries audio\+\_\+msg} = Mercer\+Audio.\+Goal()
+\item 
+\Hypertarget{classmercer__stretch_1_1mercer__nav_1_1_mercer_nav_ab60099265860684a03e069eb44cd7e9a}\label{classmercer__stretch_1_1mercer__nav_1_1_mercer_nav_ab60099265860684a03e069eb44cd7e9a} 
+{\bfseries audio\+\_\+future} = self.\+audio\+\_\+cue\+\_\+client.\+send\+\_\+goal\+\_\+async(self.\+audio\+\_\+msg)
+\item 
+\Hypertarget{classmercer__stretch_1_1mercer__nav_1_1_mercer_nav_ab32ecdd34d7d9ad2c1c115ac204a7113}\label{classmercer__stretch_1_1mercer__nav_1_1_mercer_nav_ab32ecdd34d7d9ad2c1c115ac204a7113} 
+{\bfseries audio\+\_\+response\+\_\+callback} = self.\+audio\+\_\+cue\+\_\+client.\+send\+\_\+goal\+\_\+async(self.\+audio\+\_\+msg)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classmercer__stretch_1_1mercer__nav_1_1_mercer_nav_ab0f62c339ff32a1f7784a88adabec46c}\label{classmercer__stretch_1_1mercer__nav_1_1_mercer_nav_ab0f62c339ff32a1f7784a88adabec46c} 
+{\bfseries \+\_\+get\+\_\+result\+\_\+future} = goal\+\_\+handle.\+get\+\_\+result\+\_\+async()
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/mercer\+\_\+stretch/mercer\+\_\+stretch/mercer\+\_\+nav.\+py\end{DoxyCompactItemize}

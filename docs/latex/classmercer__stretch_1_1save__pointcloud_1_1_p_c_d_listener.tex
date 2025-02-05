@@ -1,0 +1,61 @@
+\doxysection{mercer\+\_\+stretch.\+save\+\_\+pointcloud.\+PCDListener Class Reference}
+\hypertarget{classmercer__stretch_1_1save__pointcloud_1_1_p_c_d_listener}{}\label{classmercer__stretch_1_1save__pointcloud_1_1_p_c_d_listener}\index{mercer\_stretch.save\_pointcloud.PCDListener@{mercer\_stretch.save\_pointcloud.PCDListener}}
+Inheritance diagram for mercer\+\_\+stretch.\+save\+\_\+pointcloud.\+PCDListener\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classmercer__stretch_1_1save__pointcloud_1_1_p_c_d_listener}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classmercer__stretch_1_1save__pointcloud_1_1_p_c_d_listener_a71ea9f08e8ee6d5081352f8d4aeb05db}\label{classmercer__stretch_1_1save__pointcloud_1_1_p_c_d_listener_a71ea9f08e8ee6d5081352f8d4aeb05db} 
+{\bfseries \+\_\+\+\_\+init\+\_\+\+\_\+} (self)
+\item 
+\Hypertarget{classmercer__stretch_1_1save__pointcloud_1_1_p_c_d_listener_aec0580ac72a59d00acb60bc3f412fa37}\label{classmercer__stretch_1_1save__pointcloud_1_1_p_c_d_listener_aec0580ac72a59d00acb60bc3f412fa37} 
+{\bfseries listener\+\_\+callback} (self, msg)
+\item 
+\Hypertarget{classmercer__stretch_1_1save__pointcloud_1_1_p_c_d_listener_a22c934e76610a7de81c763686a7d0acc}\label{classmercer__stretch_1_1save__pointcloud_1_1_p_c_d_listener_a22c934e76610a7de81c763686a7d0acc} 
+{\bfseries save\+\_\+pcd\+\_\+callback} (self)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classmercer__stretch_1_1save__pointcloud_1_1_p_c_d_listener_adecb6f74b5c6e688eb42599f8b9a7b6d}\label{classmercer__stretch_1_1save__pointcloud_1_1_p_c_d_listener_adecb6f74b5c6e688eb42599f8b9a7b6d} 
+{\bfseries vis} = o3d.\+visualization.\+Visualizer()
+\begin{DoxyCompactList}\small\item\em This is for visualization of the received point cloud. \end{DoxyCompactList}\item 
+\Hypertarget{classmercer__stretch_1_1save__pointcloud_1_1_p_c_d_listener_a66c401bb2282bbe092fc6924306813d6}\label{classmercer__stretch_1_1save__pointcloud_1_1_p_c_d_listener_a66c401bb2282bbe092fc6924306813d6} 
+{\bfseries o3d\+\_\+pcd} = o3d.\+geometry.\+Point\+Cloud()
+\item 
+\mbox{\hyperlink{classmercer__stretch_1_1save__pointcloud_1_1_p_c_d_listener_a6a6a2f68e8c5799fdd2b15c284d56776}{pcd\+\_\+subscriber}}
+\item 
+\Hypertarget{classmercer__stretch_1_1save__pointcloud_1_1_p_c_d_listener_a7b5e8ded2a28b34621da94a0f0e231aa}\label{classmercer__stretch_1_1save__pointcloud_1_1_p_c_d_listener_a7b5e8ded2a28b34621da94a0f0e231aa} 
+{\bfseries save\+\_\+timer} = self.\+create\+\_\+timer(10, self.\+save\+\_\+pcd\+\_\+callback)
+\item 
+\Hypertarget{classmercer__stretch_1_1save__pointcloud_1_1_p_c_d_listener_ae2faf459b7af9c4afd18c05560c3a238}\label{classmercer__stretch_1_1save__pointcloud_1_1_p_c_d_listener_ae2faf459b7af9c4afd18c05560c3a238} 
+int {\bfseries save\+\_\+counter} = 0
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classmercer__stretch_1_1save__pointcloud_1_1_p_c_d_listener_a6a6a2f68e8c5799fdd2b15c284d56776}\index{mercer\_stretch.save\_pointcloud.PCDListener@{mercer\_stretch.save\_pointcloud.PCDListener}!pcd\_subscriber@{pcd\_subscriber}}
+\index{pcd\_subscriber@{pcd\_subscriber}!mercer\_stretch.save\_pointcloud.PCDListener@{mercer\_stretch.save\_pointcloud.PCDListener}}
+\doxysubsubsection{\texorpdfstring{pcd\_subscriber}{pcd\_subscriber}}
+{\footnotesize\ttfamily \label{classmercer__stretch_1_1save__pointcloud_1_1_p_c_d_listener_a6a6a2f68e8c5799fdd2b15c284d56776} 
+mercer\+\_\+stretch.\+save\+\_\+pointcloud.\+PCDListener.\+pcd\+\_\+subscriber}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \ self.create\_subscription(}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ sensor\_msgs.PointCloud2,\ \ \ \ \textcolor{comment}{\#\ Msg\ type}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'/camera/depth/color/points'},\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ topic}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ self.listener\_callback,\ \ \ \ \ \ \textcolor{comment}{\#\ Function\ to\ call}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ 10\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{\#\ QoS}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ )}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/mercer\+\_\+stretch/mercer\+\_\+stretch/save\+\_\+pointcloud.\+py\end{DoxyCompactItemize}
