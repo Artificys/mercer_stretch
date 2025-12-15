@@ -31,14 +31,12 @@ class MercerNav(Node):
 
         self.file_path = '/home/hello-robot/stretch_user/navigation_config/'
         try:
-            self.get_logger().info(f" trying to open {self.file_path + self.route_file}")
             saved_file = open(self.file_path + self.route_file)
             self.pose_dict = json.load(saved_file)
             saved_file.close()
         except:
             self.pose_dict = {}
-            self.get_logger().info("WARNING: empty pose dict.\nEnsure that the JSON file is in stretch_user/navigation config and that the YAML file is in stretch_user/maps")
-            self.get_logger().info(f"If you were not trying to navigate {self.route_file}, check your parameters")
+            self.get_logger().info("Empty pose dict")
         self.get_logger().info("Pose dict: {0}".format(self.pose_dict))
 
         self.get_logger().info("Starting up the waypoint navigator!")
