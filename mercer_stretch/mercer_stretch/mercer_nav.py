@@ -125,7 +125,7 @@ class MercerNav(Node):
 
         self.audio_result = None
         self.audio_msg = MercerAudio.Goal()
-        self.audio_msg.file_path = self.audio_file_path + 'origin.mp3'
+        self.audio_msg.file_path = self.audio_file_path + 'origin.wav'
         self.audio_future = self.audio_cue_client.send_goal_async(self.audio_msg)
         self.audio_future.add_done_callback(self.audio_response_callback)
         while self.audio_result is None:
@@ -157,7 +157,7 @@ class MercerNav(Node):
                         self.get_logger().info("Still spinning {0}".format(pose['id']))
 
             self.audio_msg = MercerAudio.Goal()
-            self.audio_msg.file_path = self.audio_file_path + pose['id'] + '.mp3'
+            self.audio_msg.file_path = self.audio_file_path + pose['id'] + '.wav'
             self.audio_future = self.audio_cue_client.send_goal_async(self.audio_msg)
             self.audio_future.add_done_callback(self.audio_response_callback)
             while self.audio_result is None:
@@ -173,7 +173,7 @@ class MercerNav(Node):
 
 
         self.audio_msg = MercerAudio.Goal()
-        self.audio_msg.file_path = self.audio_file_path + 'end.mp3'
+        self.audio_msg.file_path = self.audio_file_path + 'end.wav'
         self.audio_future = self.audio_cue_client.send_goal_async(self.audio_msg)
         self.audio_future.add_done_callback(self.audio_response_callback)
         self.get_logger().info("Navigation complete!")
