@@ -14,7 +14,7 @@ services:
     volumes:
       - $HOME/.Xauthority:/root/.Xauthority:rw
 
-  sim:
+  sim-amd:
     image: stretch-sim:latest
     build:
       context: ./
@@ -23,8 +23,24 @@ services:
     stdin_open: true
     tty: true
     network_mode: host
-    gpus: all
+    environment:
+      - DISPLAY=$DISPLAY
+      - AMD_VISIBLE_DEVICES=all
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - $HOME/.Xauthority:/root/.Xauthority:rw
+
+  sim-nvidia:
+    image: stretch-sim:latest
+    build:
+      context: ./
+      dockerfile: ./docker/sim/Dockerfile
+    privileged: true
+    stdin_open: true
+    tty: true
+    network_mode: host
     environment:
       - DISPLAY=$DISPLAY
     volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
       - $HOME/.Xauthority:/root/.Xauthority:rw
