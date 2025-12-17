@@ -1,0 +1,30 @@
+services:
+  control-station:
+    image: stretch-control:latest
+    build: 
+      context: ./
+      dockerfile: ./docker/control-station/Dockerfile
+    privileged: true
+    stdin_open: true
+    tty: true
+    network_mode: host
+    gpus: all
+    environment:
+      - DISPLAY=$DISPLAY
+    volumes:
+      - $HOME/.Xauthority:/root/.Xauthority:rw
+
+  sim:
+    image: stretch-sim:latest
+    build:
+      context: ./
+      dockerfile: ./docker/sim/Dockerfile
+    privileged: true
+    stdin_open: true
+    tty: true
+    network_mode: host
+    gpus: all
+    environment:
+      - DISPLAY=$DISPLAY
+    volumes:
+      - $HOME/.Xauthority:/root/.Xauthority:rw
