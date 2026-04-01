@@ -73,14 +73,17 @@ class MercerNav(Node):
 
     def parse_pose_dict_to_poses(self):
         self.route_poses = []
-        pose = PoseStamped()
-        pose.header.frame_id = 'map'
-        pose.header.stamp = self.navigator.get_clock().now().to_msg()
-        pose.pose.orientation.w = 1.0
         for key, ps in self.pose_dict.items():
+            pose = PoseStamped()
+            pose.header.frame_id = 'map'
+            pose.header.stamp = self.navigator.get_clock().now().to_msg()
+            
             pose.pose.position.x = ps['x']
             pose.pose.position.y = ps['y']
+            
             pose.pose.orientation.z = ps['z']
+            pose.pose.orientation.w = ps['w']
+            
             self.route_poses.append({
                 'id' : ps['id'], 
                 'pose' : deepcopy(pose),
