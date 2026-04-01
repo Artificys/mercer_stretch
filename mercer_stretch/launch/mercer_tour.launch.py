@@ -4,7 +4,7 @@ from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription, ExecuteProcess, RegisterEventHandler
 from launch.substitutions import LaunchConfiguration, FindExecutable
 from launch.launch_description_sources import PythonLaunchDescriptionSource
-from launch.event_handlers import OnProcessStart
+from launch.event_handlers import OnProcessStart, OnProcessExit
 from launch_ros.actions import Node
 from ament_index_python.packages import get_package_share_directory
 from nav2_common.launch import RewrittenYaml
@@ -120,16 +120,17 @@ def generate_launch_description():
             ('scan', '/scan_depth')
         ],
         parameters=[{
-            'range_min': 0.1,
-            'range_max': 3.0,
-            'scan_height': 10,
-            'output_frame': 'base_link'
+            'range_min': 0.5,
+            'range_max': 2.5,
+            'scan_height': 200,
+            'output_frame_id': 'base_link'
         }]
     )
 
     stow_arm = ExecuteProcess(
-        cmd=[[FindExecutable(name="ros 2"), " service call ", "/stow_the_robot", "std_srvs/srv/Trigger", "{}"]],
-        output="screen"
+        cmd=[FindExecutable(name="ros2"), "service", "call", "/stow_the_robot", "std_srvs/srv/Trigger", "{}"],
+        output="screen",
+        shell="false"
     )
 
     return LaunchDescription([
@@ -140,9 +141,9 @@ def generate_launch_description():
         route_param,
         params_file_param,
         navigation_launch,
-        demo_security_node,
         audio_node,
         depth_camera_launch,
         declare_use_depth_scan,
-        depth_camera_node
+        depth_camera_node,
+        demo_security_node,
     ])
