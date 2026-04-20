@@ -3,8 +3,8 @@
 <package format="3">
   <name>mercer_stretch</name>
   <version>0.0.0</version>
-  <description>TODO: Package description</description>
-  <maintainer email="hello-robot@todo.todo">hello-robot</maintainer>
+  <description>Software for the RPI Mercer Lab's Stretch RE1</description>
+  <maintainer email="noblez@rpi.edu">Zach Nobles</maintainer>
   <license>TODO: License declaration</license>
 
   <depend>control_msgs</depend>
@@ -15,7 +15,7 @@
   <depend>sensor_msgs</depend>
   <depend>sensor_msgs_py</depend>
   <depend>python3-dotenv</depend>
-  <depend>python3-gemini</depend>
+  <depend>python3-google-generativeai</depend>
   <exec_depend>mercer_interfaces</exec_depend>
 
   <test_depend>ament_copyright</test_depend>
