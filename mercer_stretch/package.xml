@@ -15,7 +15,6 @@
   <depend>sensor_msgs</depend>
   <depend>sensor_msgs_py</depend>
   <depend>python3-dotenv</depend>
-  <depend>python3-google-generativeai</depend>
   <exec_depend>mercer_interfaces</exec_depend>
 
   <test_depend>ament_copyright</test_depend>
