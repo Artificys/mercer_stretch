@@ -7,7 +7,7 @@ Outreach project associated with the [Douglas A. Mercer ’77 Innovation and Exp
 Git branching strategy: https://nvie.com/posts/a-successful-git-branching-model/
 
 ## Contributors
-**Thomas Byrne** (byrnet2@rpi.edu)  
-Zach Nobles (noblez@rpi.edu)  
+Thomas Byrne (byrnet2@rpi.edu)
+Zach Nobles (noblez@rpi.edu)
 Zane Brotherton (brothz@rpi.edu)
 Robert Dabney (dabner@rpi.edu)
