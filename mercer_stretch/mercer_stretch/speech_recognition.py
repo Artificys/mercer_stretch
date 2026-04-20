@@ -1,9 +1,12 @@
 import speech_recognition as sr
 from google import genai
 from dotenv import load_dotenv
+from pathlib import Path
 import os
 
-load_dotenv(os.path.join(os.path.dirname(__file__), '..', '..', '.env'))
+script_dir = Path(__file__).resolve().parent
+dotenv_path = script_dir.parent.parent / '.env'
+load_dotenv(dotenv_path)
 
 import rclpy
 from rclpy.node import Node

@@ -19,7 +19,7 @@ setup(
         ('share/' + package_name + '/config', glob('config/*')),
 
     ],
-    install_requires=['setuptools'],
+    install_requires=['setuptools', 'google-genai', 'python-dotenv', 'SpeechRecognition'],
     zip_safe=True,
     maintainer='hello-robot',
     maintainer_email='hello-robot@todo.todo',
