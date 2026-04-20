@@ -1,4 +1,9 @@
 import speech_recognition as sr
+from google import genai
+from dotenv import load_dotenv
+import os
+
+load_dotenv(os.path.join(os.path.dirname(__file__), '..', '..', '.env'))
 
 import rclpy
 from rclpy.node import Node
@@ -16,6 +21,10 @@ class SpeechRecognitionNode(Node):
         
         # Publisher for recognized speech
         self.speech_publisher = self.create_publisher(String, 'speech_text', 10)
+        self.client = genai.Client()
+        self.chat = self.client.chats.create(model="gemini-3-flash-preview")
+        response = self.chat.send_message("Testing. Please respond with \"Online\"")
+        self.get_logger().info(f"Received response from Gemini API: {response.text}")
         
         # Adjust for ambient noise
         with self.microphone as source:

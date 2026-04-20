@@ -35,6 +35,7 @@ setup(
             'mercer_nav = mercer_stretch.mercer_nav:main',
             'mercer_audio = mercer_stretch.mercer_audio:main',
             'save_pointcloud = mercer_stretch.save_pointcloud:main',
+            'speech_recognition = mercer_stretch.speech_recognition:main',
         ],
     },
 )

@@ -74,6 +74,13 @@ def generate_launch_description():
         output='screen'
     )
 
+    speech_recognition_node = Node(
+        package='mercer_stretch',
+        executable='speech_recognition',
+        name='speech_recognition',
+        output='screen'
+    )
+
     depth_camera_parameters = [{'name': 'depth_module.profile',         'default': '424x240x15', 'description': 'depth module profile'},
                            {'name': 'depth_module.depth_profile',   'default': '424x240x15', 'description': 'depth module profile'},
                            {'name': 'depth_module.infra_profile',   'default': '424x240x15', 'description': 'depth module profile'},
