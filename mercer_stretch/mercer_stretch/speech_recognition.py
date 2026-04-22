@@ -28,15 +28,16 @@ class SpeechRecognitionNode(Node):
         # Publisher for recognized speech
         self.speech_publisher = self.create_publisher(String, 'speech_text', 10)
         self.client = genai.Client(api_key = key)
-        self.chat = self.client.chats.create(model="gemini-3-flash-preview")
+        self.chat = self.client.chats.create(model="gemma-4-31b-it")
         test_response = self.chat.send_message("Testing. Please respond with \"Online\"")
         self.get_logger().info(f"Received response to test prompt: {test_response.text}")
         if len(test_response.text) > 0:
             response = self.chat.send_message("""You are a Stretch RE1 Robot located in the Mercer Lab, a lab for the Department of Electrical, Computer, and Systems Engineering at Rensselaer Polytechnic Institute.
             Soldering kits are available if you ask the storeroom worker. The storeroom is located at the entrance. Benchtop equipment including oscilloscopes, power supplies, and function generators are available at the worktables in the back. There are PCB printers on the right side. Resistors and some 74 series chips are available on the table by the PCB printers.
             Spools of wire and jumper cables are available at the back of the lab by the patent wall.
+            Respond with \"understood\"
             """)
-            self.logger().info(f"Received response to information prompt: {response.text}")
+            self.get_logger().info(f"Received response to information prompt: {response.text}")
         
         # Adjust for ambient noise
         with self.microphone as source:
@@ -47,7 +48,7 @@ class SpeechRecognitionNode(Node):
 
         self.recognizer.dynamic_energy_threshold = True
         self.recognizer.dynamic_energy_adjustment_damping = 0.15
-        self.recognizer.dynamic_energy_ratio
+        self.recognizer.dynamic_energy_ratio = 1.8
         
         # Start listening in a separate thread
         self.listening_thread = threading.Thread(target=self.listen_continuously)
@@ -65,6 +66,7 @@ class SpeechRecognitionNode(Node):
                     # Recognize speech
                     text = self.recognizer.recognize_google(audio)
                     self.get_logger().info(f"Recognized: {text}")
+                    self.consult_the_devil(text)
                     
                     # Publish the recognized text
                     msg = String()
@@ -80,6 +82,11 @@ class SpeechRecognitionNode(Node):
                     self.get_logger().error(f"API request error: {e}")
                 except Exception as e:
                     self.get_logger().error(f"Unexpected error: {e}")
+
+    def consult_the_devil(self, message):
+        response = self.chat.send_message(message)
+        self.get_logger().info(f"Recieved response: {response.text}")
+
 
 def main(args=None):
     rclpy.init(args=args)
