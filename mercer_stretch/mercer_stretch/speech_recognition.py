@@ -29,8 +29,14 @@ class SpeechRecognitionNode(Node):
         self.speech_publisher = self.create_publisher(String, 'speech_text', 10)
         self.client = genai.Client(api_key = key)
         self.chat = self.client.chats.create(model="gemini-3-flash-preview")
-        response = self.chat.send_message("Testing. Please respond with \"Online\"")
-        self.get_logger().info(f"Received response from Gemini API: {response.text}")
+        test_response = self.chat.send_message("Testing. Please respond with \"Online\"")
+        self.get_logger().info(f"Received response from Gemini API: {test_response.text}")
+        if test_response.text > 0:
+            response = self.chat.send_message("""You are a Stretch RE1 Robot located in the Mercer Lab, a lab for the Department of Electrical, Computer, and Systems Engineering at Rensselaer Polytechnic Institute.
+            Soldering kits are available if you ask the storeroom worker. Benchtop equipment including oscilloscopes, power supplies, and function generators are available at the worktables in the back. There are PCB printers on the right side. Resistors and some 74 series chips are available on the table by the PCB printers.
+            
+            """)
+            self.logger().info(f"Received response from Gemini API: {response.text}")
         
         # Adjust for ambient noise
         with self.microphone as source:
