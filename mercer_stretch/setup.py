@@ -17,6 +17,7 @@ setup(
          glob(os.path.join('launch', '*launch.[pxy][yma]*'))),
         (os.path.join('share', package_name), glob('rviz/*')),
         ('share/' + package_name + '/config', glob('config/*')),
+        (os.path.join("share", package_name), [".env"])
 
     ],
     install_requires=['setuptools', 'google-genai', 'python-dotenv', 'SpeechRecognition'],
