@@ -17,6 +17,7 @@ class TextToSpeechNode(Node):
         self.engine.say("text to speech node is online")
         self.engine.runAndWait()
 
+
     
     def text_to_speech_callback(self, request, response):
         self.get_logger().info(f"text to speech service got request: {request.message}")
