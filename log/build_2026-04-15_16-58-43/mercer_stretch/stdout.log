@@ -1,0 +1,82 @@
+running egg_info
+creating ../build/mercer_stretch/mercer_stretch.egg-info
+writing ../build/mercer_stretch/mercer_stretch.egg-info/PKG-INFO
+writing dependency_links to ../build/mercer_stretch/mercer_stretch.egg-info/dependency_links.txt
+writing entry points to ../build/mercer_stretch/mercer_stretch.egg-info/entry_points.txt
+writing requirements to ../build/mercer_stretch/mercer_stretch.egg-info/requires.txt
+writing top-level names to ../build/mercer_stretch/mercer_stretch.egg-info/top_level.txt
+writing manifest file '../build/mercer_stretch/mercer_stretch.egg-info/SOURCES.txt'
+writing manifest file '../build/mercer_stretch/mercer_stretch.egg-info/SOURCES.txt'
+running build
+running build_py
+creating /home/hello-robot/ament_ws/src/mercer_stretch/build/mercer_stretch/build
+creating /home/hello-robot/ament_ws/src/mercer_stretch/build/mercer_stretch/build/lib
+creating /home/hello-robot/ament_ws/src/mercer_stretch/build/mercer_stretch/build/lib/mercer_stretch
+copying mercer_stretch/mercer_utils.py -> /home/hello-robot/ament_ws/src/mercer_stretch/build/mercer_stretch/build/lib/mercer_stretch
+copying mercer_stretch/__init__.py -> /home/hello-robot/ament_ws/src/mercer_stretch/build/mercer_stretch/build/lib/mercer_stretch
+copying mercer_stretch/mercer_node.py -> /home/hello-robot/ament_ws/src/mercer_stretch/build/mercer_stretch/build/lib/mercer_stretch
+copying mercer_stretch/aruco_to_nav_pose.py -> /home/hello-robot/ament_ws/src/mercer_stretch/build/mercer_stretch/build/lib/mercer_stretch
+copying mercer_stretch/mercer_aruco.py -> /home/hello-robot/ament_ws/src/mercer_stretch/build/mercer_stretch/build/lib/mercer_stretch
+copying mercer_stretch/speech_recognition.py -> /home/hello-robot/ament_ws/src/mercer_stretch/build/mercer_stretch/build/lib/mercer_stretch
+copying mercer_stretch/save_pointcloud.py -> /home/hello-robot/ament_ws/src/mercer_stretch/build/mercer_stretch/build/lib/mercer_stretch
+copying mercer_stretch/align_to_aruco.py -> /home/hello-robot/ament_ws/src/mercer_stretch/build/mercer_stretch/build/lib/mercer_stretch
+copying mercer_stretch/mercer_nav.py -> /home/hello-robot/ament_ws/src/mercer_stretch/build/mercer_stretch/build/lib/mercer_stretch
+copying mercer_stretch/docking.py -> /home/hello-robot/ament_ws/src/mercer_stretch/build/mercer_stretch/build/lib/mercer_stretch
+copying mercer_stretch/mercer_audio.py -> /home/hello-robot/ament_ws/src/mercer_stretch/build/mercer_stretch/build/lib/mercer_stretch
+copying mercer_stretch/keyboard_listener.py -> /home/hello-robot/ament_ws/src/mercer_stretch/build/mercer_stretch/build/lib/mercer_stretch
+running install
+running install_lib
+creating /home/hello-robot/ament_ws/src/mercer_stretch/install/mercer_stretch/lib/python3.10/site-packages/mercer_stretch
+copying /home/hello-robot/ament_ws/src/mercer_stretch/build/mercer_stretch/build/lib/mercer_stretch/mercer_utils.py -> /home/hello-robot/ament_ws/src/mercer_stretch/install/mercer_stretch/lib/python3.10/site-packages/mercer_stretch
+copying /home/hello-robot/ament_ws/src/mercer_stretch/build/mercer_stretch/build/lib/mercer_stretch/__init__.py -> /home/hello-robot/ament_ws/src/mercer_stretch/install/mercer_stretch/lib/python3.10/site-packages/mercer_stretch
+copying /home/hello-robot/ament_ws/src/mercer_stretch/build/mercer_stretch/build/lib/mercer_stretch/mercer_node.py -> /home/hello-robot/ament_ws/src/mercer_stretch/install/mercer_stretch/lib/python3.10/site-packages/mercer_stretch
+copying /home/hello-robot/ament_ws/src/mercer_stretch/build/mercer_stretch/build/lib/mercer_stretch/aruco_to_nav_pose.py -> /home/hello-robot/ament_ws/src/mercer_stretch/install/mercer_stretch/lib/python3.10/site-packages/mercer_stretch
+copying /home/hello-robot/ament_ws/src/mercer_stretch/build/mercer_stretch/build/lib/mercer_stretch/mercer_aruco.py -> /home/hello-robot/ament_ws/src/mercer_stretch/install/mercer_stretch/lib/python3.10/site-packages/mercer_stretch
+copying /home/hello-robot/ament_ws/src/mercer_stretch/build/mercer_stretch/build/lib/mercer_stretch/speech_recognition.py -> /home/hello-robot/ament_ws/src/mercer_stretch/install/mercer_stretch/lib/python3.10/site-packages/mercer_stretch
+copying /home/hello-robot/ament_ws/src/mercer_stretch/build/mercer_stretch/build/lib/mercer_stretch/save_pointcloud.py -> /home/hello-robot/ament_ws/src/mercer_stretch/install/mercer_stretch/lib/python3.10/site-packages/mercer_stretch
+copying /home/hello-robot/ament_ws/src/mercer_stretch/build/mercer_stretch/build/lib/mercer_stretch/align_to_aruco.py -> /home/hello-robot/ament_ws/src/mercer_stretch/install/mercer_stretch/lib/python3.10/site-packages/mercer_stretch
+copying /home/hello-robot/ament_ws/src/mercer_stretch/build/mercer_stretch/build/lib/mercer_stretch/mercer_nav.py -> /home/hello-robot/ament_ws/src/mercer_stretch/install/mercer_stretch/lib/python3.10/site-packages/mercer_stretch
+copying /home/hello-robot/ament_ws/src/mercer_stretch/build/mercer_stretch/build/lib/mercer_stretch/docking.py -> /home/hello-robot/ament_ws/src/mercer_stretch/install/mercer_stretch/lib/python3.10/site-packages/mercer_stretch
+copying /home/hello-robot/ament_ws/src/mercer_stretch/build/mercer_stretch/build/lib/mercer_stretch/mercer_audio.py -> /home/hello-robot/ament_ws/src/mercer_stretch/install/mercer_stretch/lib/python3.10/site-packages/mercer_stretch
+copying /home/hello-robot/ament_ws/src/mercer_stretch/build/mercer_stretch/build/lib/mercer_stretch/keyboard_listener.py -> /home/hello-robot/ament_ws/src/mercer_stretch/install/mercer_stretch/lib/python3.10/site-packages/mercer_stretch
+byte-compiling /home/hello-robot/ament_ws/src/mercer_stretch/install/mercer_stretch/lib/python3.10/site-packages/mercer_stretch/mercer_utils.py to mercer_utils.cpython-310.pyc
+byte-compiling /home/hello-robot/ament_ws/src/mercer_stretch/install/mercer_stretch/lib/python3.10/site-packages/mercer_stretch/__init__.py to __init__.cpython-310.pyc
+byte-compiling /home/hello-robot/ament_ws/src/mercer_stretch/install/mercer_stretch/lib/python3.10/site-packages/mercer_stretch/mercer_node.py to mercer_node.cpython-310.pyc
+byte-compiling /home/hello-robot/ament_ws/src/mercer_stretch/install/mercer_stretch/lib/python3.10/site-packages/mercer_stretch/aruco_to_nav_pose.py to aruco_to_nav_pose.cpython-310.pyc
+byte-compiling /home/hello-robot/ament_ws/src/mercer_stretch/install/mercer_stretch/lib/python3.10/site-packages/mercer_stretch/mercer_aruco.py to mercer_aruco.cpython-310.pyc
+byte-compiling /home/hello-robot/ament_ws/src/mercer_stretch/install/mercer_stretch/lib/python3.10/site-packages/mercer_stretch/speech_recognition.py to speech_recognition.cpython-310.pyc
+byte-compiling /home/hello-robot/ament_ws/src/mercer_stretch/install/mercer_stretch/lib/python3.10/site-packages/mercer_stretch/save_pointcloud.py to save_pointcloud.cpython-310.pyc
+byte-compiling /home/hello-robot/ament_ws/src/mercer_stretch/install/mercer_stretch/lib/python3.10/site-packages/mercer_stretch/align_to_aruco.py to align_to_aruco.cpython-310.pyc
+byte-compiling /home/hello-robot/ament_ws/src/mercer_stretch/install/mercer_stretch/lib/python3.10/site-packages/mercer_stretch/mercer_nav.py to mercer_nav.cpython-310.pyc
+byte-compiling /home/hello-robot/ament_ws/src/mercer_stretch/install/mercer_stretch/lib/python3.10/site-packages/mercer_stretch/docking.py to docking.cpython-310.pyc
+byte-compiling /home/hello-robot/ament_ws/src/mercer_stretch/install/mercer_stretch/lib/python3.10/site-packages/mercer_stretch/mercer_audio.py to mercer_audio.cpython-310.pyc
+byte-compiling /home/hello-robot/ament_ws/src/mercer_stretch/install/mercer_stretch/lib/python3.10/site-packages/mercer_stretch/keyboard_listener.py to keyboard_listener.cpython-310.pyc
+running install_data
+creating /home/hello-robot/ament_ws/src/mercer_stretch/install/mercer_stretch/share/ament_index
+creating /home/hello-robot/ament_ws/src/mercer_stretch/install/mercer_stretch/share/ament_index/resource_index
+creating /home/hello-robot/ament_ws/src/mercer_stretch/install/mercer_stretch/share/ament_index/resource_index/packages
+copying resource/mercer_stretch -> /home/hello-robot/ament_ws/src/mercer_stretch/install/mercer_stretch/share/ament_index/resource_index/packages
+copying package.xml -> /home/hello-robot/ament_ws/src/mercer_stretch/install/mercer_stretch/share/mercer_stretch
+copying urdf/mercer_stretch.urdf -> /home/hello-robot/ament_ws/src/mercer_stretch/install/mercer_stretch/share/mercer_stretch
+creating /home/hello-robot/ament_ws/src/mercer_stretch/install/mercer_stretch/share/mercer_stretch/launch
+copying launch/aruco_docking.launch.py -> /home/hello-robot/ament_ws/src/mercer_stretch/install/mercer_stretch/share/mercer_stretch/launch
+copying launch/mercer_stretch_rviz.launch.py -> /home/hello-robot/ament_ws/src/mercer_stretch/install/mercer_stretch/share/mercer_stretch/launch
+copying launch/mercer_standby.launch.py -> /home/hello-robot/ament_ws/src/mercer_stretch/install/mercer_stretch/share/mercer_stretch/launch
+copying launch/aruco.launch.py -> /home/hello-robot/ament_ws/src/mercer_stretch/install/mercer_stretch/share/mercer_stretch/launch
+copying launch/mercer_tour.launch.py -> /home/hello-robot/ament_ws/src/mercer_stretch/install/mercer_stretch/share/mercer_stretch/launch
+copying launch/keyboard_teleop.launch.py -> /home/hello-robot/ament_ws/src/mercer_stretch/install/mercer_stretch/share/mercer_stretch/launch
+copying rviz/mercer_stretch.rviz -> /home/hello-robot/ament_ws/src/mercer_stretch/install/mercer_stretch/share/mercer_stretch
+creating /home/hello-robot/ament_ws/src/mercer_stretch/install/mercer_stretch/share/mercer_stretch/config
+copying config/stretch_marker_dict.yaml -> /home/hello-robot/ament_ws/src/mercer_stretch/install/mercer_stretch/share/mercer_stretch/config
+copying config/saved_poses.json -> /home/hello-robot/ament_ws/src/mercer_stretch/install/mercer_stretch/share/mercer_stretch/config
+running install_egg_info
+Copying ../build/mercer_stretch/mercer_stretch.egg-info to /home/hello-robot/ament_ws/src/mercer_stretch/install/mercer_stretch/lib/python3.10/site-packages/mercer_stretch-0.0.0-py3.10.egg-info
+running install_scripts
+Installing aruco_to_nav_pose script to /home/hello-robot/ament_ws/src/mercer_stretch/install/mercer_stretch/lib/mercer_stretch
+Installing keyboard_teleop script to /home/hello-robot/ament_ws/src/mercer_stretch/install/mercer_stretch/lib/mercer_stretch
+Installing mercer_aruco script to /home/hello-robot/ament_ws/src/mercer_stretch/install/mercer_stretch/lib/mercer_stretch
+Installing mercer_audio script to /home/hello-robot/ament_ws/src/mercer_stretch/install/mercer_stretch/lib/mercer_stretch
+Installing mercer_nav script to /home/hello-robot/ament_ws/src/mercer_stretch/install/mercer_stretch/lib/mercer_stretch
+Installing mercer_node script to /home/hello-robot/ament_ws/src/mercer_stretch/install/mercer_stretch/lib/mercer_stretch
+Installing save_pointcloud script to /home/hello-robot/ament_ws/src/mercer_stretch/install/mercer_stretch/lib/mercer_stretch
+writing list of installed files to '/home/hello-robot/ament_ws/src/mercer_stretch/build/mercer_stretch/install.log'

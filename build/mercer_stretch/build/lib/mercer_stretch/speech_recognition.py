@@ -1,47 +1,26 @@
 import speech_recognition as sr
-from google import genai
-from dotenv import load_dotenv
-import os
 
 import rclpy
 from rclpy.node import Node
 from std_msgs.msg import String
 import threading
 import time
-from ament_index_python.packages import get_package_share_directory
-
-package_share_directory = get_package_share_directory("mercer_stretch")
-dotenv_path = os.path.join(package_share_directory, ".env")
-load_dotenv(dotenv_path)
 
 class SpeechRecognitionNode(Node):
     def __init__(self):
         super().__init__('speech_recognition')
         self.get_logger().info("Speech Recognition Node started")
-        self.get_logger().info(f"looking for .env at {dotenv_path}")
-        key = str(os.getenv("GEMINI_API_KEY"))
-        self.get_logger().info(f"Got API key beginning in {key[:5]}")
         
         self.recognizer = sr.Recognizer()
         self.microphone = sr.Microphone()
         
         # Publisher for recognized speech
         self.speech_publisher = self.create_publisher(String, 'speech_text', 10)
-        self.client = genai.Client(api_key = key)
-        self.chat = self.client.chats.create(model="gemini-3-flash-preview")
-        response = self.chat.send_message("Testing. Please respond with \"Online\"")
-        self.get_logger().info(f"Received response from Gemini API: {response.text}")
         
         # Adjust for ambient noise
         with self.microphone as source:
             self.get_logger().info("Adjusting for ambient noise...")
-            self.recognizer.adjust_for_ambient_noise(source, duration=3)
-            self.get_logger().info(f"Set energy threshold at {self.recognizer.energy_threshold}, which will be increased 20%")
-        self.recognizer.energy_threshold *= 1.2
-
-        self.recognizer.dynamic_energy_threshold = True
-        self.recognizer.dynamic_energy_adjustment_damping = 0.15
-        self.recognizer.dynamic_energy_ratio
+            self.recognizer.adjust_for_ambient_noise(source, duration=1)
         
         # Start listening in a separate thread
         self.listening_thread = threading.Thread(target=self.listen_continuously)

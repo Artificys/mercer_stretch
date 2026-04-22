@@ -1,0 +1,9 @@
+[console_scripts]
+aruco_to_nav_pose = mercer_stretch.aruco_to_nav_pose:main
+keyboard_teleop = mercer_stretch.keyboard_listener:main
+mercer_aruco = mercer_stretch.mercer_aruco:main
+mercer_audio = mercer_stretch.mercer_audio:main
+mercer_nav = mercer_stretch.mercer_nav:main
+mercer_node = mercer_stretch.mercer_node:main
+save_pointcloud = mercer_stretch.save_pointcloud:main
+
