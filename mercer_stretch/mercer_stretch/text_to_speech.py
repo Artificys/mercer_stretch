@@ -20,6 +20,7 @@ class TextToSpeechNode(Node):
         self.voicebox = SimpleVoicebox(engine, effects=[Vocoder.build(), Normalize()])
         self.voicebox.say("text to speech node is online")
 
+
     
     def text_to_speech_callback(self, request, response):
         self.get_logger().info(f"text to speech service got request: {request.message}")

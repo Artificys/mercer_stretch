@@ -10,6 +10,8 @@ import threading
 import time
 from ament_index_python.packages import get_package_share_directory
 
+from mercer_interfaces.srv import TextToSpeech
+
 package_share_directory = get_package_share_directory("mercer_stretch")
 dotenv_path = os.path.join(package_share_directory, ".env")
 load_dotenv(dotenv_path)
@@ -54,6 +56,12 @@ class SpeechRecognitionNode(Node):
         self.listening_thread = threading.Thread(target=self.listen_continuously)
         self.listening_thread.daemon = True
         self.listening_thread.start()
+
+        self.cli = self.create_client(TextToSpeech, "text_to_speech")
+        if not self.cli.wait_for_service(timeout_sec = 5.0):
+            self.get_logger().warn("Text to speech service offline")
+
+        self.tts_request = TextToSpeech.Request()
     
     def listen_continuously(self):
         with self.microphone as source:
@@ -83,9 +91,17 @@ class SpeechRecognitionNode(Node):
                 except Exception as e:
                     self.get_logger().error(f"Unexpected error: {e}")
 
+    def request_text_to_speech(self, message):
+        self.tts_request.message = message
+        self.future = self.cli.call_async(self.tts_request)
+        rclpy.spin_until_future_complete(self, self.future)
+        return self.future.result()
+
     def consult_the_devil(self, message):
         response = self.chat.send_message(message)
         self.get_logger().info(f"Recieved response: {response.text}")
+        result = self.request_text_to_speech(response.text)
+
 
 
 def main(args=None):
