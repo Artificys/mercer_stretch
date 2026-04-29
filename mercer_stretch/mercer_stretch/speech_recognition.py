@@ -71,7 +71,10 @@ class SpeechRecognitionNode(Node):
         self.tts_request = TextToSpeech.Request()
         self._stop_loading = False
     
+
     def listen_continuously(self):
+        # listens continously and processes audio
+        # if speech is recognized, it is sent to the Gemini API
         with self.microphone as source:
             self.get_logger().info("Listening for speech...")
             while rclpy.ok():
@@ -100,12 +103,14 @@ class SpeechRecognitionNode(Node):
                     self.get_logger().error(f"Unexpected error: {e}")
 
     def request_text_to_speech(self, message):
+        # calls text to speech service from mercer text to speech node
         self.tts_request.message = message
         self.future = self.cli.call_async(self.tts_request)
         rclpy.spin_until_future_complete(self, self.future)
         return self.future.result()
     
     def execute_command(self, command):
+        # for user voice commands given to the robot
         if command == "TOUR":
             self.get_logger().info("Executing tour command")
             client = self.create_client(ChangeState, '/mercer_nav/change_state')
@@ -126,9 +131,17 @@ class SpeechRecognitionNode(Node):
             if result.returncode == 0:
                 self.get_logger().info("Robot homed")
 
+        elif command == "STOW":
+            self.get_logger().info("Executing stow command")
+            result = subprocess.run(["ros2", "service", "call", "/stow_the_robot", "std_srvs/srv/Trigger", "{}"], capture_output=True, text=True)
+            if result.returncode == 0:
+                self.get_logger().info("Robot stowed")
 
 
     def consult_the_devil(self, message):
+        # sends user message to Gemini API and gets response. If command is received, execute command
+        # otherwise, response is sent to text to speech node
+
         # start audio playback in background thread
         self._stop_loading = False
         audio_thread = threading.Thread(target=self._play_loading_audio, daemon=True)

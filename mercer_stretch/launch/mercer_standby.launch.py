@@ -185,5 +185,4 @@ def generate_launch_description():
         stow_arm,
         nav_node,
         register_configure_event,
-
     ])
