@@ -15,7 +15,7 @@ class TextToSpeechNode(Node):
 
         self.srv = self.create_service(TextToSpeech, "text_to_speech", self.text_to_speech_callback)
 
-        engine_config = ESpeakConfig(speed = 120, pitch = 30, voice = "en-us")
+        engine_config = ESpeakConfig(speed = 140, pitch = 30, voice = "en-us")
         engine = ESpeakNG(config=engine_config)
         self.voicebox = SimpleVoicebox(engine, effects=[Vocoder.build(), Normalize()])
         self.voicebox.say("text to speech node is online")
