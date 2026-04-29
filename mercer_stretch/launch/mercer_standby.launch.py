@@ -120,28 +120,6 @@ def generate_launch_description():
         }]
     )
 
-    nav_node = LifecycleNode(
-        package="mercer_stretch",
-        executable="mercer_nav",
-        name="mercer_nav",
-        namespace="",
-        output="screen"
-    )
-
-    configure_event = EmitEvent(
-        event=ChangeState(
-            lifecycle_node_matcher=matches_action(nav_node),
-            transition_id=lifecycle_msgs.msg.Transition.TRANSITION_CONFIGURE,
-        )
-    )
-
-    register_configure_event = RegisterEventHandler(
-        OnProcessStart(
-            target_action=nav_node,
-            on_start=[configure_event]
-        )
-    )
-
     speech_recognition_node = Node(
         package='mercer_stretch',
         executable='speech_recognition',
@@ -168,7 +146,5 @@ def generate_launch_description():
         audio_node,
         depth_camera_launch,
         declare_use_depth_scan,
-        depth_camera_node,
-        nav_node,
-        register_configure_event,
+        depth_camera_node
     ])

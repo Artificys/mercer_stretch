@@ -12,8 +12,6 @@ from std_msgs.msg import String
 import threading
 import time
 from ament_index_python.packages import get_package_share_directory
-from lifecycle_msgs.srv import ChangeState
-from lifecycle_msgs.msg import Transition
 
 from mercer_interfaces.srv import TextToSpeech
 
@@ -80,7 +78,7 @@ class SpeechRecognitionNode(Node):
             self.get_logger().info("Listening for speech...")
             while rclpy.ok():
                 try:
-                    audio = self.recognizer.listen(source, timeout=5, phrase_time_limit=10)
+                    audio = self.recognizer.listen(source, timeout=3, phrase_time_limit=10)
                     self.get_logger().info("Processing audio...")
                     
                     # Recognize speech
@@ -114,17 +112,20 @@ class SpeechRecognitionNode(Node):
         # for user voice commands given to the robot
         if command == "TOUR":
             self.get_logger().info("Executing tour command")
-            client = self.create_client(ChangeState, '/mercer_nav/change_state')
-            while not client.wait_for_service(timeout_sec=1.0):
-                self.get_logger().info('Waiting for lifecycle service...')
-            request = ChangeState.Request()
-            request.transition.id = Transition.TRANSITION_ACTIVATE
-            
-            future = client.call_async(request)
-            self.get_logger().info("Transitioning mercer_nav to ACTIVE...")
+            self.request_text_to_speech("Certainly! We will now begin the tour")
+            # Launch mercer_nav node when tour command runs
+            result = subprocess.run(
+                ["ros2", "run", "mercer_stretch", "mercer_nav"],
+                capture_output=True, text=True
+            )
+            if result.returncode == 0:
+                self.get_logger().info("mercer_nav launched successfully")
+            else:
+                self.get_logger().error(f"Failed to launch mercer_nav: {result.stderr}")
 
         elif command == "HOME":
             self.get_logger().info("Executing home command")
+            self.request_text_to_speech("Homing")
             result = subprocess.run(["stretch_free_robot_process.py"], capture_output=True, text=True)
             if result.returncode == 0:
                 self.get_logger().info("Robot process freed")
@@ -134,6 +135,7 @@ class SpeechRecognitionNode(Node):
 
         elif command == "STOW":
             self.get_logger().info("Executing stow command")
+            self.request_text_to_speech("Stowing")
             result = subprocess.run(["ros2", "service", "call", "/stow_the_robot", "std_srvs/srv/Trigger", "{}"], capture_output=True, text=True)
             if result.returncode == 0:
                 self.get_logger().info("Robot stowed")
