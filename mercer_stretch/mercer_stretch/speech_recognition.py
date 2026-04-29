@@ -120,6 +120,9 @@ class SpeechRecognitionNode(Node):
                 ["ros2", "run", "mercer_stretch", "mercer_nav", "--ros-args", "-p", "route_file:=Mercer_Room_Tour.json"],
                 capture_output=True, text=True
             )
+            self.get_logger().info(f"Return code: {result.returncode}")
+            self.get_logger().info(f"Stdout: {result.stdout}")
+            self.get_logger().error(f"Stderr: {result.stderr}")
             if result.returncode == 0:
                 self.get_logger().info("mercer_nav launched successfully")
             else:
@@ -153,9 +156,9 @@ class SpeechRecognitionNode(Node):
         audio_thread.start()
         
         try:
+            self.responding = True
             response = self.chat.send_message(message)
             self.loading = False
-            self.responding = True
             if response.text[:5] == "$CMD_":
                 command = response.text[5:]
                 self.get_logger().info(f"Received command: {command}")
