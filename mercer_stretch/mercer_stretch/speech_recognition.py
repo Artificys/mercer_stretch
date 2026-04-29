@@ -116,7 +116,7 @@ class SpeechRecognitionNode(Node):
             
             future = client.call_async(request)
             self.get_logger().info("Transitioning mercer_nav to ACTIVE...")
-            
+
         elif command == "HOME":
             self.get_logger().info("Executing home command")
             result = subprocess.run(["stretch_free_robot_process.py"], capture_output=True, text=True)
@@ -152,7 +152,7 @@ class SpeechRecognitionNode(Node):
 
     def _play_loading_audio(self):
         """Play loading audio in a loop until stopped"""
-        audio_path = os.path.join(package_share_directory, "audio", "waiting.mp3")
+        audio_path = os.path.join(package_share_directory, "waiting.mp3")
         while not self._stop_loading:
             try:
                 playsound(audio_path)
