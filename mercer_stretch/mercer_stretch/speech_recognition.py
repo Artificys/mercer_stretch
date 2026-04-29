@@ -171,7 +171,7 @@ class SpeechRecognitionNode(Node):
         audio_path = os.path.join(package_share_directory, "audio", "waiting.mp3")
         while not self._stop_loading:
             try:
-                playsound(audio_path)
+                playsound(audio_path, block=True)
             except Exception as e:
                 self.get_logger().error(f"Error playing audio: {e}")
                 break
