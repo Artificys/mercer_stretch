@@ -29,7 +29,7 @@ class MercerNav(Node):
 
         self.navigator = BasicNavigator()
 
-        self.file_path = '/home/hello-robot/stretch_user/navigation_config/'
+        self.file_path = 'C:/Users/zachp/OneDrive/Documents/projects/mercer_stretch/navigation_config/'
         try:
             self.get_logger().info(f" trying to open {self.file_path + self.route_file}")
             saved_file = open(self.file_path + self.route_file)

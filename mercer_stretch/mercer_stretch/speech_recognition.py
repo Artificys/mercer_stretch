@@ -15,6 +15,7 @@ from ament_index_python.packages import get_package_share_directory
 
 from mercer_interfaces.srv import TextToSpeech
 
+env = os.environ.copy()
 package_share_directory = get_package_share_directory("mercer_stretch")
 dotenv_path = os.path.join(package_share_directory, ".env")
 load_dotenv(dotenv_path)
