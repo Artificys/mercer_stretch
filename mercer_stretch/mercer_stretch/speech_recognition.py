@@ -140,6 +140,7 @@ class SpeechRecognitionNode(Node):
 
 
     def consult_the_devil(self, message):
+        self._stop_loading = False
         # sends user message to Gemini API and gets response. If command is received, execute command
         # otherwise, response is sent to text to speech node
 
@@ -150,6 +151,7 @@ class SpeechRecognitionNode(Node):
         
         try:
             response = self.chat.send_message(message)
+            self._stop_loading = True
             if response.text[:5] == "$CMD_":
                 command = response.text[5:]
                 self.get_logger().info(f"Received command: {command}")
