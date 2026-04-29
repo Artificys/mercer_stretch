@@ -69,9 +69,11 @@ class SpeechRecognitionNode(Node):
 
         self.tts_request = TextToSpeech.Request()
         self._stop_loading = False
+        self.on_tour = False
     
 
     def listen_continuously(self):
+        if self.on_tour: return
         # listens continously and processes audio
         # if speech is recognized, it is sent to the Gemini API
         with self.microphone as source:
@@ -111,6 +113,7 @@ class SpeechRecognitionNode(Node):
     def execute_command(self, command):
         # for user voice commands given to the robot
         if command == "TOUR":
+            self.on_tour = True
             self.get_logger().info("Executing tour command")
             self.request_text_to_speech("Certainly! We will now begin the tour")
             # Launch mercer_nav node when tour command runs
