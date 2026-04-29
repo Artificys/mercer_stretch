@@ -30,9 +30,9 @@ class SpeechRecognitionNode(Node):
         self.recognizer = sr.Recognizer()
         self.microphone = sr.Microphone()
         self.on_tour = False
+        self.loading = False
+        self.responding = False
         
-        # Publisher for recognized speech
-        self.speech_publisher = self.create_publisher(String, 'speech_text', 10)
         self.client = genai.Client(api_key = key)
         self.chat = self.client.chats.create(model="gemma-4-31b-it")
         test_response = self.chat.send_message("Testing. Please respond with \"Online\"")
@@ -59,6 +59,9 @@ class SpeechRecognitionNode(Node):
         self.recognizer.dynamic_energy_adjustment_damping = 0.15
         self.recognizer.dynamic_energy_ratio = 1.8
         
+        # Lock to prevent concurrent API calls
+        self._api_lock = threading.Lock()
+        
         # Start listening in a separate thread
         self.listening_thread = threading.Thread(target=self.listen_continuously)
         self.listening_thread.daemon = True
@@ -69,29 +72,23 @@ class SpeechRecognitionNode(Node):
             self.get_logger().warn("Text to speech service offline")
 
         self.tts_request = TextToSpeech.Request()
-        self._stop_loading = False
     
 
     def listen_continuously(self):
-        if self.on_tour: return
+        if self.on_tour or self.loading: return
         # listens continously and processes audio
         # if speech is recognized, it is sent to the Gemini API
         with self.microphone as source:
             self.get_logger().info("Listening for speech...")
             while rclpy.ok():
                 try:
-                    audio = self.recognizer.listen(source, timeout=3, phrase_time_limit=10)
+                    audio = self.recognizer.listen(source, timeout=2, phrase_time_limit=10)
                     self.get_logger().info("Processing audio...")
                     
                     # Recognize speech
                     text = self.recognizer.recognize_google(audio)
                     self.get_logger().info(f"Recognized: {text}")
                     self.consult_the_devil(text)
-                    
-                    # Publish the recognized text
-                    msg = String()
-                    msg.data = text
-                    self.speech_publisher.publish(msg)
                     
                 except sr.WaitTimeoutError:
                     # Timeout, continue listening
@@ -108,6 +105,7 @@ class SpeechRecognitionNode(Node):
         self.tts_request.message = message
         self.future = self.cli.call_async(self.tts_request)
         rclpy.spin_until_future_complete(self, self.future)
+        self.responding = False
         return self.future.result()
     
     def execute_command(self, command):
@@ -117,15 +115,10 @@ class SpeechRecognitionNode(Node):
             self.get_logger().info("Executing tour command")
             self.request_text_to_speech("Certainly! We will now begin the tour")
             # Launch mercer_nav node when tour command runs
-            try:
-                result = subprocess.run(
-                    ["ros2", "run", "mercer_stretch", "mercer_nav"],
-                    capture_output=True, text=True
-                )
-            except Exception as e:
-                self.get_logger().error(f"Error launching mercer_nav: {e}")
-                return
-            
+            result = subprocess.run(
+                ["ros2", "run", "mercer_stretch", "mercer_nav", "--ros-args", "-p", "route_file:=Mercer_Room_Tour.json"],
+                capture_output=True, text=True
+            )
             if result.returncode == 0:
                 self.get_logger().info("mercer_nav launched successfully")
             else:
@@ -150,18 +143,18 @@ class SpeechRecognitionNode(Node):
 
 
     def consult_the_devil(self, message):
-        self._stop_loading = False
         # sends user message to Gemini API and gets response. If command is received, execute command
         # otherwise, response is sent to text to speech node
 
         # start audio playback in background thread
-        self._stop_loading = False
+        self.loading = True
         audio_thread = threading.Thread(target=self._play_loading_audio, daemon=True)
         audio_thread.start()
         
         try:
             response = self.chat.send_message(message)
-            self._stop_loading = True
+            self.loading = False
+            self.responding = True
             if response.text[:5] == "$CMD_":
                 command = response.text[5:]
                 self.get_logger().info(f"Received command: {command}")
@@ -179,13 +172,11 @@ class SpeechRecognitionNode(Node):
     def _play_loading_audio(self):
         """Play loading audio in a loop until stopped"""
         audio_path = os.path.join(package_share_directory, "audio", "waiting.mp3")
-        while not self._stop_loading:
+        while self.loading:
             try:
                 playsound(audio_path, block=True)
             except Exception as e:
                 self.get_logger().error(f"Error playing audio: {e}")
-                break
-            if self._stop_loading:
                 break
 
 
