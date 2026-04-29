@@ -80,13 +80,6 @@ def generate_launch_description():
         output='screen'
     )
 
-    speech_recognition_node = Node(
-        package='mercer_stretch',
-        executable='speech_recognition',
-        name='speech_recognition',
-        output='screen'
-    )
-
     depth_camera_parameters = [{'name': 'depth_module.profile',         'default': '424x240x15', 'description': 'depth module profile'},
                            {'name': 'depth_module.depth_profile',   'default': '424x240x15', 'description': 'depth module profile'},
                            {'name': 'depth_module.infra_profile',   'default': '424x240x15', 'description': 'depth module profile'},
@@ -125,12 +118,6 @@ def generate_launch_description():
             'scan_height': 200,
             'output_frame_id': 'base_link'
         }]
-    )
-
-    stow_arm = ExecuteProcess(
-        cmd=[FindExecutable(name="ros2"), "service", "call", "/stow_the_robot", "std_srvs/srv/Trigger", "{}"],
-        output="screen",
-        shell="false"
     )
 
     nav_node = LifecycleNode(
@@ -182,7 +169,6 @@ def generate_launch_description():
         depth_camera_launch,
         declare_use_depth_scan,
         depth_camera_node,
-        stow_arm,
         nav_node,
         register_configure_event,
     ])

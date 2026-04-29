@@ -43,7 +43,8 @@ class SpeechRecognitionNode(Node):
             Soldering kits are available if you ask the storeroom worker. The storeroom is located at the entrance. Benchtop equipment including oscilloscopes, power supplies, and function generators are available at the worktables in the back. There are PCB printers on the right side. Resistors and some 74 series chips are available on the table by the PCB printers.
             Spools of wire and jumper cables are available at the back of the lab by the patent wall.
             If a user asks for a tour of the lab, respond with $CMD_TOUR. Do not start responses with $CMD unless a specified command is prompted.
-            If a user tells you to home the robot and includes the word execute in their prompt, respond with $CMD_HOME
+            If a user tells you to home the robot and includes the word execute in their prompt, respond with $CMD_HOME.
+            If a user tells you to stow the robot and includes the word execute in their prompt, respond with $CMD_STOW.
             Respond with \"understood\"
             """)
             self.get_logger().info(f"Received response to information prompt: {response.text}")
