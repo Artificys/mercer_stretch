@@ -29,6 +29,7 @@ class SpeechRecognitionNode(Node):
         
         self.recognizer = sr.Recognizer()
         self.microphone = sr.Microphone()
+        self.on_tour = False
         
         # Publisher for recognized speech
         self.speech_publisher = self.create_publisher(String, 'speech_text', 10)
@@ -69,7 +70,6 @@ class SpeechRecognitionNode(Node):
 
         self.tts_request = TextToSpeech.Request()
         self._stop_loading = False
-        self.on_tour = False
     
 
     def listen_continuously(self):
