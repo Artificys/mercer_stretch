@@ -117,8 +117,9 @@ class SpeechRecognitionNode(Node):
             self.request_text_to_speech("Certainly! We will now begin the tour")
             # Launch mercer_nav node when tour command runs
             result = subprocess.run(
-                ["ros2", "run", "mercer_stretch", "mercer_nav", "--ros-args", "-p", "route_file:=Mercer_Room_Tour.json"],
-                capture_output=True, text=True
+                ["bash", "-c", "source /opt/ros/humble/setup.bash && ros2 run mercer_stretch mercer_nav --ros-args -p route_file:=Mercer_Room_Tour.json"],
+                capture_output=True, text=True,
+                env=env
             )
             self.get_logger().info(f"Return code: {result.returncode}")
             self.get_logger().info(f"Stdout: {result.stdout}")
