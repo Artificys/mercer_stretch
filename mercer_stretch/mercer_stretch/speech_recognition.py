@@ -15,10 +15,10 @@ from ament_index_python.packages import get_package_share_directory
 
 from mercer_interfaces.srv import TextToSpeech
 
-env = os.environ.copy()
 package_share_directory = get_package_share_directory("mercer_stretch")
 dotenv_path = os.path.join(package_share_directory, ".env")
 load_dotenv(dotenv_path)
+env = os.environ.copy()
 
 class SpeechRecognitionNode(Node):
     def __init__(self):
@@ -131,14 +131,14 @@ class SpeechRecognitionNode(Node):
             result = subprocess.run(["stretch_free_robot_process.py"], capture_output=True, text=True)
             if result.returncode == 0:
                 self.get_logger().info("Robot process freed")
-            result = subprocess.run(["stretch_robot_home.py"], capture_output=True, text=True)
+            result = subprocess.run(["stretch_robot_home.py"], capture_output=True, text=True, env=env)
             if result.returncode == 0:
                 self.get_logger().info("Robot homed")
 
         elif command == "STOW":
             self.get_logger().info("Executing stow command")
             self.request_text_to_speech("Stowing")
-            result = subprocess.run(["ros2", "service", "call", "/stow_the_robot", "std_srvs/srv/Trigger"], capture_output=True, text=True)
+            result = subprocess.run(["ros2", "service", "call", "/stow_the_robot", "std_srvs/srv/Trigger"], capture_output=True, text=True, env=env)
             if result.returncode == 0:
                 self.get_logger().info("Robot stowed")
 
