@@ -2,6 +2,7 @@ import speech_recognition as sr
 from google import genai
 from dotenv import load_dotenv
 import os
+from playsound import playsound
 
 import rclpy
 from rclpy.node import Node
@@ -9,6 +10,8 @@ from std_msgs.msg import String
 import threading
 import time
 from ament_index_python.packages import get_package_share_directory
+from lifecycle_msgs.srv import ChangeState
+from lifecycle_msgs.msg import Transition
 
 from mercer_interfaces.srv import TextToSpeech
 
@@ -37,6 +40,7 @@ class SpeechRecognitionNode(Node):
             response = self.chat.send_message("""You are a Stretch RE1 Robot located in the Mercer Lab, a lab for the Department of Electrical, Computer, and Systems Engineering at Rensselaer Polytechnic Institute.
             Soldering kits are available if you ask the storeroom worker. The storeroom is located at the entrance. Benchtop equipment including oscilloscopes, power supplies, and function generators are available at the worktables in the back. There are PCB printers on the right side. Resistors and some 74 series chips are available on the table by the PCB printers.
             Spools of wire and jumper cables are available at the back of the lab by the patent wall.
+            If a user asks for a tour of the lab, respond with "$CMD_TOUR". Do not start responses with $CMD unless a specified command is prompted.
             Respond with \"understood\"
             """)
             self.get_logger().info(f"Received response to information prompt: {response.text}")
@@ -62,6 +66,7 @@ class SpeechRecognitionNode(Node):
             self.get_logger().warn("Text to speech service offline")
 
         self.tts_request = TextToSpeech.Request()
+        self._stop_loading = False
     
     def listen_continuously(self):
         with self.microphone as source:
@@ -96,12 +101,53 @@ class SpeechRecognitionNode(Node):
         self.future = self.cli.call_async(self.tts_request)
         rclpy.spin_until_future_complete(self, self.future)
         return self.future.result()
+    
+    def execute_command(self, command):
+        if command == "TOUR":
+            self.get_logger().info("Executing tour command")
+            client = self.create_client(ChangeState, '/mercer_nav/change_state')
+            while not client.wait_for_service(timeout_sec=1.0):
+                self.get_logger().info('Waiting for lifecycle service...')
+            request = ChangeState.Request()
+            request.transition.id = Transition.TRANSITION_ACTIVATE
+            
+            future = client.call_async(request)
+            self.get_logger().info("Transitioning mercer_nav to ACTIVE...")
+
 
     def consult_the_devil(self, message):
-        response = self.chat.send_message(message)
-        self.get_logger().info(f"Recieved response: {response.text}")
-        result = self.request_text_to_speech(response.text)
+        # start audio playback in background thread
+        self._stop_loading = False
+        audio_thread = threading.Thread(target=self._play_loading_audio, daemon=True)
+        audio_thread.start()
+        
+        try:
+            response = self.chat.send_message(message)
+            if response.text[:5] == "$CMD_":
+                command = response.text[5:]
+                self.get_logger().info(f"Received command: {command}")
+                self.execute_command(command)
+                return
+        except Exception as e:
+            self.get_logger().error(f"Error communicating with Gemini API: {e}")
+            result = self.request_text_to_speech("Looks like an error occurred. Contact Zach at N O B L E Z @ R P I . E D U and tell him to get on it.")
+            return
+        else:
+            self.get_logger().info(f"Recieved response: {response.text}")
+            result = self.request_text_to_speech(response.text)
+        return result
 
+    def _play_loading_audio(self):
+        """Play loading audio in a loop until stopped"""
+        audio_path = os.path.join(package_share_directory, "audio", "waiting.mp3")
+        while not self._stop_loading:
+            try:
+                playsound(audio_path)
+            except Exception as e:
+                self.get_logger().error(f"Error playing audio: {e}")
+                break
+            if self._stop_loading:
+                break
 
 
 def main(args=None):

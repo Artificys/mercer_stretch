@@ -1,13 +1,19 @@
 import os
 
 from launch import LaunchDescription
-from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription, ExecuteProcess, RegisterEventHandler
+from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription, ExecuteProcess, RegisterEventHandler, EmitEvent
 from launch.substitutions import LaunchConfiguration, FindExecutable
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.event_handlers import OnProcessStart, OnProcessExit
 from launch_ros.actions import Node
 from ament_index_python.packages import get_package_share_directory
 from nav2_common.launch import RewrittenYaml
+
+from launch_ros.actions import LifecycleNode
+from launch_ros.events.lifecycle import ChangeState
+from launch.ros_events import matches_action
+import lifecycle_msgs.msg
+
 
 
 def generate_launch_description():
@@ -127,6 +133,28 @@ def generate_launch_description():
         shell="false"
     )
 
+    nav_node = LifecycleNode(
+        package="mercer_stretch",
+        executable="mercer_nav",
+        name="mercer_nav",
+        namespace="",
+        output="screen"
+    )
+
+    configure_event = EmitEvent(
+        event=ChangeState(
+            lifecycle_node_matcher=matches_action(nav_node),
+            transition_id=lifecycle_msgs.msg.Transition.TRANSITION_CONFIGURE,
+        )
+    )
+
+    register_configure_event = RegisterEventHandler(
+        OnProcessStart(
+            target_action=nav_node,
+            on_start=[configure_event]
+        )
+    )
+
     return LaunchDescription([
         teleop_type_param,
         use_sim_time_param,
@@ -139,4 +167,6 @@ def generate_launch_description():
         declare_use_depth_scan,
         depth_camera_node,
         stow_arm,
+        nav_node,
+        register_configure_event
     ])
