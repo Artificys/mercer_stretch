@@ -117,10 +117,15 @@ class SpeechRecognitionNode(Node):
             self.get_logger().info("Executing tour command")
             self.request_text_to_speech("Certainly! We will now begin the tour")
             # Launch mercer_nav node when tour command runs
-            result = subprocess.run(
-                ["ros2", "run", "mercer_stretch", "mercer_nav"],
-                capture_output=True, text=True
-            )
+            try:
+                result = subprocess.run(
+                    ["ros2", "run", "mercer_stretch", "mercer_nav"],
+                    capture_output=True, text=True
+                )
+            except Exception as e:
+                self.get_logger().error(f"Error launching mercer_nav: {e}")
+                return
+            
             if result.returncode == 0:
                 self.get_logger().info("mercer_nav launched successfully")
             else:
@@ -139,7 +144,7 @@ class SpeechRecognitionNode(Node):
         elif command == "STOW":
             self.get_logger().info("Executing stow command")
             self.request_text_to_speech("Stowing")
-            result = subprocess.run(["ros2", "service", "call", "/stow_the_robot", "std_srvs/srv/Trigger", "{}"], capture_output=True, text=True)
+            result = subprocess.run(["ros2", "service", "call", "/stow_the_robot", "std_srvs/srv/Trigger"], capture_output=True, text=True)
             if result.returncode == 0:
                 self.get_logger().info("Robot stowed")
 
@@ -164,7 +169,7 @@ class SpeechRecognitionNode(Node):
                 return
         except Exception as e:
             self.get_logger().error(f"Error communicating with Gemini API: {e}")
-            result = self.request_text_to_speech("Looks like an error occurred. Contact Zach at N O B L E Z @ R P I . E D U and tell him to get on it.")
+            result = self.request_text_to_speech("Looks like an error occurred. Contact Zach at N O B L E Z @ R P I dot E D U and tell him to get on it.")
             return
         else:
             self.get_logger().info(f"Recieved response: {response.text}")
