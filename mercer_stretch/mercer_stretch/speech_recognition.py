@@ -3,6 +3,8 @@ from google import genai
 from dotenv import load_dotenv
 import os
 from playsound import playsound
+import subprocess
+
 
 import rclpy
 from rclpy.node import Node
@@ -40,7 +42,8 @@ class SpeechRecognitionNode(Node):
             response = self.chat.send_message("""You are a Stretch RE1 Robot located in the Mercer Lab, a lab for the Department of Electrical, Computer, and Systems Engineering at Rensselaer Polytechnic Institute.
             Soldering kits are available if you ask the storeroom worker. The storeroom is located at the entrance. Benchtop equipment including oscilloscopes, power supplies, and function generators are available at the worktables in the back. There are PCB printers on the right side. Resistors and some 74 series chips are available on the table by the PCB printers.
             Spools of wire and jumper cables are available at the back of the lab by the patent wall.
-            If a user asks for a tour of the lab, respond with "$CMD_TOUR". Do not start responses with $CMD unless a specified command is prompted.
+            If a user asks for a tour of the lab, respond with $CMD_TOUR. Do not start responses with $CMD unless a specified command is prompted.
+            If a user tells you to home the robot and includes the word execute in their prompt, respond with $CMD_HOME
             Respond with \"understood\"
             """)
             self.get_logger().info(f"Received response to information prompt: {response.text}")
@@ -113,6 +116,16 @@ class SpeechRecognitionNode(Node):
             
             future = client.call_async(request)
             self.get_logger().info("Transitioning mercer_nav to ACTIVE...")
+            
+        elif command == "HOME":
+            self.get_logger().info("Executing home command")
+            result = subprocess.run(["stretch_free_robot_process.py"], capture_output=True, text=True)
+            if result.returncode == 0:
+                self.get_logger().info("Robot process freed")
+            result = subprocess.run(["stretch_robot_home.py"], capture_output=True, text=True)
+            if result.returncode == 0:
+                self.get_logger().info("Robot homed")
+
 
 
     def consult_the_devil(self, message):
