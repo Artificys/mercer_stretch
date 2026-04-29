@@ -155,7 +155,23 @@ def generate_launch_description():
         )
     )
 
+    speech_recognition_node = Node(
+        package='mercer_stretch',
+        executable='speech_recognition',
+        name='speech_recognition',
+        output='screen'
+    )
+
+    text_to_speech_node = Node(
+        package='mercer_stretch',
+        executable='text_to_speech',
+        name='text_to_speech',
+        output='screen'
+    )
+
     return LaunchDescription([
+        text_to_speech_node,
+        speech_recognition_node, 
         teleop_type_param,
         use_sim_time_param,
         autostart_param,
@@ -168,5 +184,6 @@ def generate_launch_description():
         depth_camera_node,
         stow_arm,
         nav_node,
-        register_configure_event
+        register_configure_event,
+
     ])
