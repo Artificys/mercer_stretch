@@ -166,7 +166,7 @@ class SpeechRecognitionNode(Node):
 
     def _play_loading_audio(self):
         """Play loading audio in a loop until stopped"""
-        audio_path = os.path.join(package_share_directory, "waiting.mp3")
+        audio_path = os.path.join(package_share_directory, "audio", "waiting.mp3")
         while not self._stop_loading:
             try:
                 playsound(audio_path)
