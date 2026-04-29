@@ -11,7 +11,7 @@ from nav2_common.launch import RewrittenYaml
 
 from launch_ros.actions import LifecycleNode
 from launch_ros.events.lifecycle import ChangeState
-from launch.ros_events import matches_action
+from launch.events import matches_action
 import lifecycle_msgs.msg
 
 
