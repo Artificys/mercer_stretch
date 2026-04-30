@@ -18,7 +18,6 @@ from mercer_interfaces.srv import TextToSpeech
 package_share_directory = get_package_share_directory("mercer_stretch")
 dotenv_path = os.path.join(package_share_directory, ".env")
 load_dotenv(dotenv_path)
-env = os.environ.copy()
 
 class SpeechRecognitionNode(Node):
     def __init__(self):
@@ -111,19 +110,18 @@ class SpeechRecognitionNode(Node):
     
     def execute_command(self, command):
         # for user voice commands given to the robot
+        env = os.environ.copy()
+
         if command == "TOUR":
             self.on_tour = True
             self.get_logger().info("Executing tour command")
             self.request_text_to_speech("Certainly! We will now begin the tour")
             # Launch mercer_nav node when tour command runs
             result = subprocess.run(
-                ["bash", "-c", "source /opt/ros/humble/setup.bash && ros2 run mercer_stretch mercer_nav --ros-args -p route_file:=Mercer_Room_Tour.json"],
+                ["ros2", "run", "mercer_stretch", "mercer_nav", "--ros-args", "-p", "route_file:=Mercer_Room_Tour.json"],
                 capture_output=True, text=True,
                 env=env
             )
-            self.get_logger().info(f"Return code: {result.returncode}")
-            self.get_logger().info(f"Stdout: {result.stdout}")
-            self.get_logger().error(f"Stderr: {result.stderr}")
             if result.returncode == 0:
                 self.get_logger().info("mercer_nav launched successfully")
             else:
@@ -166,7 +164,7 @@ class SpeechRecognitionNode(Node):
                 self.execute_command(command)
                 return
         except Exception as e:
-            self.get_logger().error(f"Error communicating with Gemini API: {e}")
+            self.get_logger().error(f"Error with Gemini or command: {e}")
             result = self.request_text_to_speech("Looks like an error occurred. Contact Zach at N O B L E Z @ R P I dot E D U and tell him to get on it.")
             return
         else:
