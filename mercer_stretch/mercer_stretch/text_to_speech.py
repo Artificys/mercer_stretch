@@ -1,10 +1,22 @@
+"""
+I had to do some annoying things to get piper to work. If you're ever setting this up on another robot, here's what to do:
+1. python3 -m venv ~/piper_venv
+2. source ~/piper_venv/bin/activate
+3. pip install piper-tts
+4. in ~/piper_venv/models run python3 -m piper.download_voices en_us-john-medium
+"""
+import os
+import sys
+venv_site = os.path.expanduser("~/piper_venv/lib/python3.10/site-packages")
+sys.path.insert(0, venv_site)
+
+
 import rclpy
 from rclpy.node import Node
 from std_msgs.msg import String
 
-from voicebox.tts import ESpeakNG, ESpeakConfig
-from voicebox import SimpleVoicebox
-from voicebox.effects import Vocoder, Normalize
+from piper import PiperVoice
+import simpleaudio as sa
 from mercer_interfaces.srv import TextToSpeech
 
 class TextToSpeechNode(Node):
@@ -15,14 +27,39 @@ class TextToSpeechNode(Node):
 
         self.srv = self.create_service(TextToSpeech, "text_to_speech", self.text_to_speech_callback)
 
-        engine_config = ESpeakConfig(speed = 140, pitch = 30, voice = "en-us")
-        engine = ESpeakNG(config=engine_config)
-        self.voicebox = SimpleVoicebox(engine, effects=[Vocoder.build(), Normalize()])
-        self.voicebox.say("text to speech node is online")
+        try:
+            self.voice = PiperVoice.load(os.path.expanduser("~/piper_venv/models/en_US-john-medium.onnx"))
+        except Exception as e:
+            self.get_logger().error(f"Failed to load Piper voice: {e}")
+            self.voice = None
+            return
+
+        for chunk in self.voice.synthesize("Text to speech node is online"):
+            # Play audio directly without saving to file
+            audio_obj = sa.play_buffer(
+                chunk.audio_int16_bytes,
+                channels=1,
+                bytes_per_sample=2,
+                sample_rate=chunk.sample_rate
+            )
+            audio_obj.wait()
+
     
     def text_to_speech_callback(self, request, response):
         self.get_logger().info(f"text to speech service got request: {request.message}")
-        self.voicebox.say(request.message + " ")
+        if self.voice is None:
+            self.get_logger().error("Voice not loaded")
+            response.result = -1
+            return response
+        for chunk in self.voice.synthesize(request.message):
+            # Play audio directly without saving to file
+            audio_obj = sa.play_buffer(
+                chunk.audio_int16_bytes,
+                channels=1,
+                bytes_per_sample=2,
+                sample_rate=chunk.sample_rate
+            )
+            audio_obj.wait()
         response.result = 0
         return response
 
