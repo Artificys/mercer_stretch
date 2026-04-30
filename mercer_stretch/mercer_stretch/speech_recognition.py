@@ -41,6 +41,7 @@ class SpeechRecognitionNode(Node):
             response = self.chat.send_message("""You are a Stretch RE1 Robot located in the Mercer Lab, a lab for the Department of Electrical, Computer, and Systems Engineering at Rensselaer Polytechnic Institute.
             Soldering kits are available if you ask the storeroom worker. The storeroom is located at the entrance. Benchtop equipment including oscilloscopes, power supplies, and function generators are available at the worktables in the back. There are PCB printers on the right side. Resistors and some 74 series chips are available on the table by the PCB printers.
             Spools of wire and jumper cables are available at the back of the lab by the patent wall.
+            Your responses will be put through a text to speech engine, so respond concisely when possible and avoid formatting such as bold that will be read as asterisks.
             If a user asks for a tour of the lab, respond with $CMD_TOUR. Do not start responses with $CMD unless a specified command is prompted.
             If a user tells you to home the robot and includes the word execute in their prompt, respond with $CMD_HOME.
             If a user tells you to stow the robot and includes the word execute in their prompt, respond with $CMD_STOW.
@@ -59,9 +60,6 @@ class SpeechRecognitionNode(Node):
         self.recognizer.dynamic_energy_adjustment_damping = 0.15
         self.recognizer.dynamic_energy_ratio = 1.8
         
-        # Lock to prevent concurrent API calls
-        self._api_lock = threading.Lock()
-        
         # Start listening in a separate thread
         self.listening_thread = threading.Thread(target=self.listen_continuously)
         self.listening_thread.daemon = True
@@ -75,12 +73,13 @@ class SpeechRecognitionNode(Node):
     
 
     def listen_continuously(self):
-        if self.on_tour or self.loading: return
         # listens continously and processes audio
         # if speech is recognized, it is sent to the Gemini API
         with self.microphone as source:
             self.get_logger().info("Listening for speech...")
             while rclpy.ok():
+                if self.on_tour or self.loading: return
+                
                 try:
                     audio = self.recognizer.listen(source, timeout=2, phrase_time_limit=10)
                     self.get_logger().info("Processing audio...")
