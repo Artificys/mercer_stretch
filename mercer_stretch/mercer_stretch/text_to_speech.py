@@ -38,11 +38,11 @@ class TextToSpeechNode(Node):
             # Play audio directly without saving to file
             audio_obj = sa.play_buffer(
                 chunk.audio_int16_bytes,
-                channels=1,
+                num_channels=1,
                 bytes_per_sample=2,
                 sample_rate=chunk.sample_rate
             )
-            audio_obj.wait()
+            audio_obj.wait_done()
 
     
     def text_to_speech_callback(self, request, response):
@@ -55,11 +55,11 @@ class TextToSpeechNode(Node):
             # Play audio directly without saving to file
             audio_obj = sa.play_buffer(
                 chunk.audio_int16_bytes,
-                channels=1,
+                num_channels=1,
                 bytes_per_sample=2,
                 sample_rate=chunk.sample_rate
             )
-            audio_obj.wait()
+            audio_obj.wait_done()
         response.result = 0
         return response
 
