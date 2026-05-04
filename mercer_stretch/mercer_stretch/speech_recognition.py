@@ -29,7 +29,7 @@ class SpeechRecognitionNode(Node):
         
         self.recognizer = sr.Recognizer()
         self.microphone = sr.Microphone()
-        self.on_tour = False
+        self.executing_command = False
         self.loading = False
         self.responding = False
 
@@ -81,7 +81,7 @@ class SpeechRecognitionNode(Node):
         with self.microphone as source:
             self.get_logger().info("Listening for speech...")
             while rclpy.ok():
-                if self.on_tour or self.loading: return
+                if self.executing_command or self.loading: return
 
                 try:
                     audio = self.recognizer.listen(source, timeout=2, phrase_time_limit=10)
@@ -112,10 +112,12 @@ class SpeechRecognitionNode(Node):
     
     def execute_command(self, command):
         # for user voice commands given to the robot
+        command = command.strip().upper()
         self.get_logger().info(f"Command function attempting: {command}")
         env = os.environ.copy()
+        self.executing_command = True
+        self.get_logger().info("Pausing speech recognition for command")
         if command == "TOUR":
-            self.on_tour = True
             self.get_logger().info("Executing tour command")
             self.request_text_to_speech("Certainly! We will now begin the tour")
             time.sleep(2)
@@ -132,11 +134,7 @@ class SpeechRecognitionNode(Node):
 
         elif command == "HOME":
             self.get_logger().info("Executing home command")
-            self.request_text_to_speech("Homing")
-            result = subprocess.run(["stretch_free_robot_process.py"], capture_output=True, text=True)
-            if result.returncode == 0:
-                self.get_logger().info("Robot process freed")
-            result = subprocess.run(["stretch_robot_home.py"], capture_output=True, text=True, env=env)
+            result = subprocess.run(["ros2", "service", "call", "/home_the_robot", "std_srvs/srv/Trigger"], capture_output=True, text=True, env=env)
             if result.returncode == 0:
                 self.get_logger().info("Robot homed")
 
@@ -145,6 +143,10 @@ class SpeechRecognitionNode(Node):
             result = subprocess.run(["ros2", "service", "call", "/stow_the_robot", "std_srvs/srv/Trigger"], capture_output=True, text=True, env=env)
             if result.returncode == 0:
                 self.get_logger().info("Robot stowed")
+                self.request_text_to_speech("Arm has been stowed")
+        
+        self.executing_command = False
+        self.get_logger().info("Resuming speech recognition")
 
 
     def consult_the_devil(self, message):
