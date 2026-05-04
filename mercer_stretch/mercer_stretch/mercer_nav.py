@@ -31,12 +31,14 @@ class MercerNav(Node):
 
         self.file_path = '/home/hello-robot/stretch_user/navigation_config/'
         try:
+            self.get_logger().info(f" trying to open {self.file_path + self.route_file}")
             saved_file = open(self.file_path + self.route_file)
             self.pose_dict = json.load(saved_file)
             saved_file.close()
         except:
             self.pose_dict = {}
-            self.get_logger().info("Empty pose dict")
+            self.get_logger().info("WARNING: empty pose dict.\nEnsure that the JSON file is in stretch_user/navigation config and that the YAML file is in stretch_user/maps")
+            self.get_logger().info(f"If you were not trying to navigate {self.route_file}, check your parameters")
         self.get_logger().info("Pose dict: {0}".format(self.pose_dict))
 
         self.get_logger().info("Starting up the waypoint navigator!")
@@ -49,7 +51,7 @@ class MercerNav(Node):
         self.get_logger().info("Nav2 active and recognized in mercer_nav!")
 
         self.audio_cue_client = ActionClient(self, MercerAudio, 'mercer_audio_server')
-        self.audio_file_path = '/home/hello-robot/Documents/MercerX Lab Greeter Audio/'
+        self.audio_file_path = '/home/hello-robot/stretch_user/audio/Mercer_Lab_tour/'
 
         self.ready_to_move = False
 
@@ -71,14 +73,17 @@ class MercerNav(Node):
 
     def parse_pose_dict_to_poses(self):
         self.route_poses = []
-        pose = PoseStamped()
-        pose.header.frame_id = 'map'
-        pose.header.stamp = self.navigator.get_clock().now().to_msg()
-        pose.pose.orientation.w = 1.0
         for key, ps in self.pose_dict.items():
+            pose = PoseStamped()
+            pose.header.frame_id = 'map'
+            pose.header.stamp = self.navigator.get_clock().now().to_msg()
+            
             pose.pose.position.x = ps['x']
             pose.pose.position.y = ps['y']
+            
             pose.pose.orientation.z = ps['z']
+            pose.pose.orientation.w = ps['w']
+            
             self.route_poses.append({
                 'id' : ps['id'], 
                 'pose' : deepcopy(pose),

@@ -11,15 +11,17 @@ setup(
     data_files=[
         ('share/ament_index/resource_index/packages',
             ['resource/' + package_name]),
+        (os.path.join('share', package_name, 'audio'), ['resource/audio/waiting.mp3']),
         ('share/' + package_name, ['package.xml']),
         (os.path.join('share', package_name), glob('urdf/*')),
         (os.path.join('share', package_name, 'launch'),
          glob(os.path.join('launch', '*launch.[pxy][yma]*'))),
         (os.path.join('share', package_name), glob('rviz/*')),
         ('share/' + package_name + '/config', glob('config/*')),
+        (os.path.join("share", package_name), [".env"])
 
     ],
-    install_requires=['setuptools'],
+    install_requires=['setuptools', 'google-genai', 'python-dotenv', 'SpeechRecognition'],
     zip_safe=True,
     maintainer='hello-robot',
     maintainer_email='hello-robot@todo.todo',
@@ -35,6 +37,8 @@ setup(
             'mercer_nav = mercer_stretch.mercer_nav:main',
             'mercer_audio = mercer_stretch.mercer_audio:main',
             'save_pointcloud = mercer_stretch.save_pointcloud:main',
+            'speech_recognition = mercer_stretch.speech_recognition:main',
+            'text_to_speech = mercer_stretch.text_to_speech:main'
         ],
     },
 )

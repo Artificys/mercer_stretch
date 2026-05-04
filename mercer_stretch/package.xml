@@ -3,8 +3,8 @@
 <package format="3">
   <name>mercer_stretch</name>
   <version>0.0.0</version>
-  <description>TODO: Package description</description>
-  <maintainer email="hello-robot@todo.todo">hello-robot</maintainer>
+  <description>Software for the RPI Mercer Lab's Stretch RE1</description>
+  <maintainer email="noblez@rpi.edu">Zach Nobles</maintainer>
   <license>TODO: License declaration</license>
 
   <depend>control_msgs</depend>
