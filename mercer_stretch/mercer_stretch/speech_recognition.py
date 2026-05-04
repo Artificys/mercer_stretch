@@ -118,6 +118,7 @@ class SpeechRecognitionNode(Node):
             self.on_tour = True
             self.get_logger().info("Executing tour command")
             self.request_text_to_speech("Certainly! We will now begin the tour")
+            time.sleep(2)
             # Launch mercer_nav node when tour command runs
             result = subprocess.run(
                 ["ros2", "run", "mercer_stretch", "mercer_nav", "--ros-args", "-p", "route_file:=Mercer_Room_Tour.json"],
@@ -141,10 +142,10 @@ class SpeechRecognitionNode(Node):
 
         elif command == "STOW":
             self.get_logger().info("Executing stow command")
-            self.request_text_to_speech("Stowing")
             result = subprocess.run(["ros2", "service", "call", "/stow_the_robot", "std_srvs/srv/Trigger"], capture_output=True, text=True, env=env)
             if result.returncode == 0:
                 self.get_logger().info("Robot stowed")
+                self.request_text_to_speech("The arm has been stowed")
 
 
     def consult_the_devil(self, message):
@@ -177,6 +178,7 @@ class SpeechRecognitionNode(Node):
     def _play_loading_audio(self):
         """Play loading audio in a loop until stopped"""
         audio_path = os.path.join(package_share_directory, "audio", "waiting.mp3")
+        time.sleep(0.5)
         while self.loading:
             try:
                 playsound(audio_path, block=True)
