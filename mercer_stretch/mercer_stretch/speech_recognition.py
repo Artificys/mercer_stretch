@@ -38,8 +38,8 @@ class SpeechRecognitionNode(Node):
             Spools of wire and jumper cables are available at the back of the lab by the patent wall.
             Your responses will be put through a text to speech engine, so respond concisely when possible and avoid formatting such as bold that will be read as asterisks.
             If a user asks for a tour of the lab, respond with $CMD_TOUR. Do not start responses with $CMD unless a specified command is prompted.
-            If a user tells you to home the robot and includes the word execute in their prompt, respond with $CMD_HOME.
-            If a user tells you to stow the robot and includes the word execute in their prompt, respond with $CMD_STOW.
+            If a user tells you command alpha, respond with $CMD_HOME.
+            If a user tells you command beta, respond with $CMD_STOW.
             Respond with understood.
             """
         
@@ -112,8 +112,8 @@ class SpeechRecognitionNode(Node):
     
     def execute_command(self, command):
         # for user voice commands given to the robot
+        self.get_logger().info(f"Command function attempting: {command}")
         env = os.environ.copy()
-
         if command == "TOUR":
             self.on_tour = True
             self.get_logger().info("Executing tour command")
@@ -145,7 +145,6 @@ class SpeechRecognitionNode(Node):
             result = subprocess.run(["ros2", "service", "call", "/stow_the_robot", "std_srvs/srv/Trigger"], capture_output=True, text=True, env=env)
             if result.returncode == 0:
                 self.get_logger().info("Robot stowed")
-                self.request_text_to_speech("The arm has been stowed")
 
 
     def consult_the_devil(self, message):
@@ -176,9 +175,9 @@ class SpeechRecognitionNode(Node):
         return result
 
     def _play_loading_audio(self):
-        """Play loading audio in a loop until stopped"""
+        # Play loading audio in a loop until stopped
         audio_path = os.path.join(package_share_directory, "audio", "waiting.mp3")
-        time.sleep(0.5)
+        time.sleep(1.0)
         while self.loading:
             try:
                 playsound(audio_path, block=True)
