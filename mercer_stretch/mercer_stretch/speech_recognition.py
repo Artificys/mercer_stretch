@@ -33,13 +33,14 @@ class SpeechRecognitionNode(Node):
         self.loading = False
         self.responding = False
 
-        system_instructions = """You are a Stretch RE1 Robot located in the Mercer Lab, a lab for the Department of Electrical, Computer, and Systems Engineering at Rensselaer Polytechnic Institute.
+        system_instructions = """You are a Stretch RE1 Robot located in the Mercer Lab, a lab for the Department of Electrical, Computer, and Systems Engineering at Rensselaer Polytechnic Institute. The lab is in the Jonsson Engineering Center, room 6204.
             Soldering kits are available if you ask the storeroom worker. The storeroom is located at the entrance. Benchtop equipment including oscilloscopes, power supplies, and function generators are available at the worktables in the back. There are PCB printers on the right side. Resistors and some 74 series chips are available on the table by the PCB printers.
             Spools of wire and jumper cables are available at the back of the lab by the patent wall.
-            Your responses will be put through a text to speech engine, so respond concisely when possible and avoid formatting such as bold that will be read as asterisks.
+            Your responses will be put through a text to speech engine, so respond concisely when possible and avoid formatting such as bold or bullet points that will be read as asterisks.
             If a user asks for a tour of the lab, respond with $CMD_TOUR. Do not start responses with $CMD unless a specified command is prompted.
-            If a user tells you command alpha, respond with $CMD_HOME.
-            If a user tells you command beta, respond with $CMD_STOW.
+            If a user tells you command alpha or to home the robot, respond with $CMD_HOME.
+            If a user tells you command beta or to stow the robot, respond with $CMD_STOW.
+            If a user asks for a battery check, respond with $CMD_BATTERY.
             Respond with understood.
             """
         
@@ -81,7 +82,7 @@ class SpeechRecognitionNode(Node):
         with self.microphone as source:
             self.get_logger().info("Listening for speech...")
             while rclpy.ok():
-                if self.executing_command or self.loading: return
+                if self.executing_command or self.responding: return
 
                 try:
                     audio = self.recognizer.listen(source, timeout=2, phrase_time_limit=10)
@@ -145,6 +146,14 @@ class SpeechRecognitionNode(Node):
                 self.get_logger().info("Robot stowed")
                 self.request_text_to_speech("Arm has been stowed")
         
+        elif command == "BATTERY":
+            self.get_logger().info("Executing battery check command")
+            result = subprocess.run(["ros2", "topic", "echo", "--once", "/battery", "sensor_msgs/BatteryState"], capture_output=True, text=True, env=env)
+            if result.returncode == 0:
+                output = result.stdout.strip()
+                self.get_logger().info(f"Battery check result: {output}")
+                self.request_text_to_speech(f"Battery voltage at {output}")
+        
         self.executing_command = False
         self.get_logger().info("Resuming speech recognition")
 
@@ -166,14 +175,17 @@ class SpeechRecognitionNode(Node):
                 command = response.text[5:]
                 self.get_logger().info(f"Received command: {command}")
                 self.execute_command(command)
-                return
         except Exception as e:
             self.get_logger().error(f"Error with Gemini or command: {e}")
             result = self.request_text_to_speech("Looks like an error occurred. Contact Zach at N O B L E Z @ R P I dot E D U and tell him to get on it.")
+            self.responding = False
+            self.executing_command = False
             return
         else:
             self.get_logger().info(f"Recieved response: {response.text}")
             result = self.request_text_to_speech(response.text)
+            self.executing_command = False
+            self.responding = False
         return result
 
     def _play_loading_audio(self):

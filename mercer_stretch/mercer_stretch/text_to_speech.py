@@ -46,7 +46,7 @@ class TextToSpeechNode(Node):
 
     
     def text_to_speech_callback(self, request, response):
-        self.get_logger().info(f"text to speech service got request: {request.message}")
+        self.get_logger().info(f"text to speech service got request: {request.message.strip()}")
         if self.voice is None:
             self.get_logger().error("Voice not loaded")
             response.result = -1
