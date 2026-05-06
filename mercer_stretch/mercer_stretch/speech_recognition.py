@@ -45,7 +45,7 @@ class SpeechRecognitionNode(Node):
             """
         
         self.client = genai.Client(api_key = key)
-        self.chat = self.client.chats.create(model="gemma-3n-e4b-it")
+        self.chat = self.client.chats.create(model="gemma-4-26b-a4b-it")
         test_response = self.chat.send_message("Testing. Please respond with \"Online\"")
         self.get_logger().info(f"Received response to test prompt: {test_response.text}")
 
