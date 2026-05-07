@@ -83,7 +83,9 @@ class SpeechRecognitionNode(Node):
         with self.microphone as source:
             self.get_logger().info("Listening for speech...")
             while rclpy.ok():
-                if self.executing_command or self.responding: continue
+                if self.executing_command or self.responding: 
+                    time.sleep(0.1)
+                    continue
 
                 try:
                     audio = self.recognizer.listen(source, timeout=2, phrase_time_limit=10)
@@ -108,6 +110,8 @@ class SpeechRecognitionNode(Node):
         # calls text to speech service from mercer text to speech node
         self.tts_request.message = message
         result = self.cli.call(self.tts_request)
+
+        time.sleep(0.2)
     
         self.responding = False
         return result
