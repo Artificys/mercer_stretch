@@ -7,6 +7,7 @@ import subprocess
 
 
 import rclpy
+from rclpy.executors import MultiThreadedExecutor
 from rclpy.node import Node
 from std_msgs.msg import String
 import threading
@@ -82,7 +83,7 @@ class SpeechRecognitionNode(Node):
         with self.microphone as source:
             self.get_logger().info("Listening for speech...")
             while rclpy.ok():
-                if self.executing_command or self.responding: return
+                if self.executing_command or self.responding: continue
 
                 try:
                     audio = self.recognizer.listen(source, timeout=2, phrase_time_limit=10)
@@ -106,10 +107,10 @@ class SpeechRecognitionNode(Node):
     def request_text_to_speech(self, message):
         # calls text to speech service from mercer text to speech node
         self.tts_request.message = message
-        self.future = self.cli.call_async(self.tts_request)
-        rclpy.spin_until_future_complete(self, self.future)
+        result = self.cli.call(self.tts_request)
+    
         self.responding = False
-        return self.future.result()
+        return result
     
     def execute_command(self, command):
         # for user voice commands given to the robot
@@ -180,7 +181,7 @@ class SpeechRecognitionNode(Node):
             result = self.request_text_to_speech("Looks like an error occurred. Contact Zach at N O B L E Z @ R P I dot E D U and tell him to get on it.")
             self.responding = False
             self.executing_command = False
-            return
+            return 1
         else:
             self.get_logger().info(f"Recieved response: {response.text}")
             result = self.request_text_to_speech(response.text)
@@ -203,9 +204,12 @@ class SpeechRecognitionNode(Node):
 def main(args=None):
     rclpy.init(args=args)
     node = SpeechRecognitionNode()
+
+    executor = MultiThreadedExecutor()
+    executor.add_node(node)
     
     try:
-        rclpy.spin(node)
+        executor.spin()
     except KeyboardInterrupt:
         node.get_logger().info("Shutting down Speech Recognition Node")
     finally:
