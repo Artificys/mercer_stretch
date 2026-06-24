@@ -1,0 +1,46 @@
+\doxysection{mercer\+\_\+stretch.\+mercer\+\_\+node.\+Mercer\+Node Class Reference}
+\hypertarget{classmercer__stretch_1_1mercer__node_1_1_mercer_node}{}\label{classmercer__stretch_1_1mercer__node_1_1_mercer_node}\index{mercer\_stretch.mercer\_node.MercerNode@{mercer\_stretch.mercer\_node.MercerNode}}
+Inheritance diagram for mercer\+\_\+stretch.\+mercer\+\_\+node.\+Mercer\+Node\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classmercer__stretch_1_1mercer__node_1_1_mercer_node}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classmercer__stretch_1_1mercer__node_1_1_mercer_node_acdac264a28a8d221182dae2d8a56f9ad}\label{classmercer__stretch_1_1mercer__node_1_1_mercer_node_acdac264a28a8d221182dae2d8a56f9ad} 
+{\bfseries \+\_\+\+\_\+init\+\_\+\+\_\+} (self)
+\item 
+\Hypertarget{classmercer__stretch_1_1mercer__node_1_1_mercer_node_ae48ebb64302f376f5a0eb66e5150d6be}\label{classmercer__stretch_1_1mercer__node_1_1_mercer_node_ae48ebb64302f376f5a0eb66e5150d6be} 
+{\bfseries keyboard\+\_\+buffer\+\_\+timer\+\_\+callback} (self)
+\item 
+\Hypertarget{classmercer__stretch_1_1mercer__node_1_1_mercer_node_a2c934f7a28620e278d24aff15e87171d}\label{classmercer__stretch_1_1mercer__node_1_1_mercer_node_a2c934f7a28620e278d24aff15e87171d} 
+{\bfseries keyboard\+\_\+status\+\_\+timer\+\_\+callback} (self)
+\item 
+\Hypertarget{classmercer__stretch_1_1mercer__node_1_1_mercer_node_abf75edfcb15e202f08096daca80a7512}\label{classmercer__stretch_1_1mercer__node_1_1_mercer_node_abf75edfcb15e202f08096daca80a7512} 
+{\bfseries keyboard\+\_\+listener\+\_\+callback} (self, msg)
+\item 
+\Hypertarget{classmercer__stretch_1_1mercer__node_1_1_mercer_node_a772fe508f275439a20fdbfdbead54c97}\label{classmercer__stretch_1_1mercer__node_1_1_mercer_node_a772fe508f275439a20fdbfdbead54c97} 
+{\bfseries align\+\_\+to\+\_\+aruco} (self)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classmercer__stretch_1_1mercer__node_1_1_mercer_node_a8b2cd659f26b97cd85b9bd68305beab6}\label{classmercer__stretch_1_1mercer__node_1_1_mercer_node_a8b2cd659f26b97cd85b9bd68305beab6} 
+bool {\bfseries is\+\_\+keyboard\+\_\+running} = True
+\item 
+\Hypertarget{classmercer__stretch_1_1mercer__node_1_1_mercer_node_a85dfb91de34374d60e28cd0b1c3c03f6}\label{classmercer__stretch_1_1mercer__node_1_1_mercer_node_a85dfb91de34374d60e28cd0b1c3c03f6} 
+{\bfseries keyboard\+\_\+status\+\_\+sub} = self.\+create\+\_\+subscription(String, "{}/keyboard\+\_\+listener/status"{}, self.\+keyboard\+\_\+listener\+\_\+callback, 1)
+\item 
+\Hypertarget{classmercer__stretch_1_1mercer__node_1_1_mercer_node_a2d5a5ee87f545b68af5b62d936253480}\label{classmercer__stretch_1_1mercer__node_1_1_mercer_node_a2d5a5ee87f545b68af5b62d936253480} 
+{\bfseries keyboard\+\_\+buffer\+\_\+timer} = self.\+create\+\_\+timer(10, self.\+keyboard\+\_\+buffer\+\_\+timer\+\_\+callback)
+\item 
+\Hypertarget{classmercer__stretch_1_1mercer__node_1_1_mercer_node_a39605dc9ac4265fa55d788fbba99022e}\label{classmercer__stretch_1_1mercer__node_1_1_mercer_node_a39605dc9ac4265fa55d788fbba99022e} 
+{\bfseries keyboard\+\_\+status\+\_\+timer} = self.\+create\+\_\+timer(2, self.\+keyboard\+\_\+status\+\_\+timer\+\_\+callback)
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/mercer\+\_\+stretch/mercer\+\_\+stretch/mercer\+\_\+node.\+py\end{DoxyCompactItemize}

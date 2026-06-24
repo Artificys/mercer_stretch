@@ -1,0 +1,96 @@
+\doxysection{mercer\+\_\+stretch.\+keyboard\+\_\+listener.\+Keyboard\+Listener Class Reference}
+\hypertarget{classmercer__stretch_1_1keyboard__listener_1_1_keyboard_listener}{}\label{classmercer__stretch_1_1keyboard__listener_1_1_keyboard_listener}\index{mercer\_stretch.keyboard\_listener.KeyboardListener@{mercer\_stretch.keyboard\_listener.KeyboardListener}}
+Inheritance diagram for mercer\+\_\+stretch.\+keyboard\+\_\+listener.\+Keyboard\+Listener\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classmercer__stretch_1_1keyboard__listener_1_1_keyboard_listener}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classmercer__stretch_1_1keyboard__listener_1_1_keyboard_listener_a87f983758daebc53a8961989384a042d}\label{classmercer__stretch_1_1keyboard__listener_1_1_keyboard_listener_a87f983758daebc53a8961989384a042d} 
+{\bfseries \+\_\+\+\_\+init\+\_\+\+\_\+} (self)
+\item 
+\Hypertarget{classmercer__stretch_1_1keyboard__listener_1_1_keyboard_listener_a892fc143dcaecd13ee345f05f333f480}\label{classmercer__stretch_1_1keyboard__listener_1_1_keyboard_listener_a892fc143dcaecd13ee345f05f333f480} 
+{\bfseries joint\+\_\+states\+\_\+callback} (self, joint\+\_\+state)
+\item 
+\Hypertarget{classmercer__stretch_1_1keyboard__listener_1_1_keyboard_listener_ae15e4a8d24a1a5dae5ae87e1e5ec1bce}\label{classmercer__stretch_1_1keyboard__listener_1_1_keyboard_listener_ae15e4a8d24a1a5dae5ae87e1e5ec1bce} 
+{\bfseries get\+\_\+command} (self)
+\item 
+\Hypertarget{classmercer__stretch_1_1keyboard__listener_1_1_keyboard_listener_a81bac3997471d6a535cf1e58cb8ee61f}\label{classmercer__stretch_1_1keyboard__listener_1_1_keyboard_listener_a81bac3997471d6a535cf1e58cb8ee61f} 
+{\bfseries get\+\_\+relative\+\_\+transform} (self, target\+\_\+frame, source\+\_\+frame)
+\item 
+\Hypertarget{classmercer__stretch_1_1keyboard__listener_1_1_keyboard_listener_aa00eb1aee28e960441806f6859f7f665}\label{classmercer__stretch_1_1keyboard__listener_1_1_keyboard_listener_aa00eb1aee28e960441806f6859f7f665} 
+{\bfseries send\+\_\+command} (self, command)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classmercer__stretch_1_1keyboard__listener_1_1_keyboard_listener_a8a0e6c9bd46b833bff84a1999d53503f}\label{classmercer__stretch_1_1keyboard__listener_1_1_keyboard_listener_a8a0e6c9bd46b833bff84a1999d53503f} 
+{\bfseries kb} = KBHit()
+\item 
+\Hypertarget{classmercer__stretch_1_1keyboard__listener_1_1_keyboard_listener_a5371a8fa7ada71967ea97950d8549204}\label{classmercer__stretch_1_1keyboard__listener_1_1_keyboard_listener_a5371a8fa7ada71967ea97950d8549204} 
+str {\bfseries step\+\_\+size} = \textquotesingle{}medium\textquotesingle{}
+\item 
+dict \mbox{\hyperlink{classmercer__stretch_1_1keyboard__listener_1_1_keyboard_listener_a2dfedd515f7c4026a848212d9a600c0e}{deltas}}
+\item 
+\Hypertarget{classmercer__stretch_1_1keyboard__listener_1_1_keyboard_listener_a20131e3121293495773ce593a1e659b9}\label{classmercer__stretch_1_1keyboard__listener_1_1_keyboard_listener_a20131e3121293495773ce593a1e659b9} 
+dict {\bfseries translate\+\_\+delta} = self.\+deltas\mbox{[}self.\+step\+\_\+size\mbox{]}\mbox{[}\textquotesingle{}translation\textquotesingle{}\mbox{]}
+\item 
+\Hypertarget{classmercer__stretch_1_1keyboard__listener_1_1_keyboard_listener_a7f694c871fbb75f92848e74458d852c1}\label{classmercer__stretch_1_1keyboard__listener_1_1_keyboard_listener_a7f694c871fbb75f92848e74458d852c1} 
+dict {\bfseries rotate\+\_\+delta} = self.\+deltas\mbox{[}self.\+step\+\_\+size\mbox{]}\mbox{[}\textquotesingle{}rotation\textquotesingle{}\mbox{]}
+\item 
+\Hypertarget{classmercer__stretch_1_1keyboard__listener_1_1_keyboard_listener_a5e8f0c415563ec09302d56fbc8bdf46f}\label{classmercer__stretch_1_1keyboard__listener_1_1_keyboard_listener_a5e8f0c415563ec09302d56fbc8bdf46f} 
+{\bfseries update\+\_\+rate} = self.\+get\+\_\+parameter(\textquotesingle{}update\+\_\+rate\textquotesingle{}).get\+\_\+parameter\+\_\+value().integer\+\_\+value
+\item 
+\Hypertarget{classmercer__stretch_1_1keyboard__listener_1_1_keyboard_listener_aeb3ca4c481e572a57426350580418c52}\label{classmercer__stretch_1_1keyboard__listener_1_1_keyboard_listener_aeb3ca4c481e572a57426350580418c52} 
+{\bfseries key\+\_\+timer} = self.\+create\+\_\+timer(1/self.\+update\+\_\+rate, self.\+get\+\_\+command)
+\item 
+\Hypertarget{classmercer__stretch_1_1keyboard__listener_1_1_keyboard_listener_a9d1ec744cfc2939943899bb4a2be5c3b}\label{classmercer__stretch_1_1keyboard__listener_1_1_keyboard_listener_a9d1ec744cfc2939943899bb4a2be5c3b} 
+{\bfseries joint\+\_\+state} = Joint\+State()
+\item 
+\Hypertarget{classmercer__stretch_1_1keyboard__listener_1_1_keyboard_listener_ad4408a2ce9041be957d9157c65b87b86}\label{classmercer__stretch_1_1keyboard__listener_1_1_keyboard_listener_ad4408a2ce9041be957d9157c65b87b86} 
+{\bfseries joint\+\_\+states\+\_\+sub} = self.\+create\+\_\+subscription(Joint\+State, \textquotesingle{}/stretch/joint\+\_\+states\textquotesingle{}, self.\+joint\+\_\+states\+\_\+callback, 1)
+\item 
+\Hypertarget{classmercer__stretch_1_1keyboard__listener_1_1_keyboard_listener_a4491764d20729da65a841acfea7cd007}\label{classmercer__stretch_1_1keyboard__listener_1_1_keyboard_listener_a4491764d20729da65a841acfea7cd007} 
+{\bfseries trajectory\+\_\+client} = Action\+Client(self, Follow\+Joint\+Trajectory, \textquotesingle{}/stretch\+\_\+controller/follow\+\_\+joint\+\_\+trajectory\textquotesingle{})
+\item 
+\Hypertarget{classmercer__stretch_1_1keyboard__listener_1_1_keyboard_listener_a35cba183a0588ff4462542b3a03264ba}\label{classmercer__stretch_1_1keyboard__listener_1_1_keyboard_listener_a35cba183a0588ff4462542b3a03264ba} 
+{\bfseries status\+\_\+pub} = self.\+create\+\_\+publisher(String, \textquotesingle{}/keyboard\+\_\+listener/status\textquotesingle{}, 1)
+\item 
+\Hypertarget{classmercer__stretch_1_1keyboard__listener_1_1_keyboard_listener_ab7d17f7ae31ddec7c1d52112eeee2dc9}\label{classmercer__stretch_1_1keyboard__listener_1_1_keyboard_listener_ab7d17f7ae31ddec7c1d52112eeee2dc9} 
+{\bfseries status\+\_\+str} = String()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classmercer__stretch_1_1keyboard__listener_1_1_keyboard_listener_a2dfedd515f7c4026a848212d9a600c0e}\index{mercer\_stretch.keyboard\_listener.KeyboardListener@{mercer\_stretch.keyboard\_listener.KeyboardListener}!deltas@{deltas}}
+\index{deltas@{deltas}!mercer\_stretch.keyboard\_listener.KeyboardListener@{mercer\_stretch.keyboard\_listener.KeyboardListener}}
+\doxysubsubsection{\texorpdfstring{deltas}{deltas}}
+{\footnotesize\ttfamily \label{classmercer__stretch_1_1keyboard__listener_1_1_keyboard_listener_a2dfedd515f7c4026a848212d9a600c0e} 
+dict mercer\+\_\+stretch.\+keyboard\+\_\+listener.\+Keyboard\+Listener.\+deltas}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'small'}:\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'rotation'}:\ np.radians(5),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'translation'}:\ 0.01}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'medium'}:\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'rotation'}:\ np.radians(10),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'translation'}:\ 0.05}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \},\ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'large'}:\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'rotation'}:\ np.radians(15),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{'translation'}:\ 0.1}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/mercer\+\_\+stretch/mercer\+\_\+stretch/keyboard\+\_\+listener.\+py\end{DoxyCompactItemize}
